@@ -553,6 +553,17 @@
             color: #64748b;
             margin-bottom: 0.4rem;
         }
+		        /* Стили для множественного выбора */
+        .multi-hint {
+            font-size: 0.8rem;
+            color: #ffab40;
+            margin-bottom: 0.4rem;
+        }
+        .quiz-options li.selected-multi {
+            border-color: var(--accent);
+            background: rgba(108, 92, 231, 0.2);
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -1411,43 +1422,43 @@ void Update()
             if (main) main.scrollTop = 0;
         }
 
-        // --- Данные тестов: 3 этапа, 30 вопросов (23 открытых, 4 закрытых, 3 хронологических) ---
+                // --- Данные тестов: 3 этапа, 30 вопросов ---
         var testData = [
             // ===== ЭТАП 1: Базовый синтаксис (1-10) =====
-            { stage: "📅 Этап 1: Базовый синтаксис и среда разработки", type: "open", q: "1. Напишите команду для вывода сообщения \"Привет\" в консоль Unity.", o: [], c: -1, openA: "Debug.Log(\"Привет\");", chrono: [] },
-            { stage: "", type: "open", q: "2. Какой символ обязательно ставить в конце каждой инструкции в C#? Напишите этот символ.", o: [], c: -1, openA: ";", chrono: [] },
-            { stage: "", type: "open", q: "3. Напишите две косые черты, которые превращают текст в комментарий.", o: [], c: -1, openA: "//", chrono: [] },
-            { stage: "", type: "closed", q: "4. Какой метод Unity вызывается один раз при запуске сцены?", o: ["Update()", "Awake()", "Start()", "FixedUpdate()"], c: 2, openA: "", chrono: [] },
-            { stage: "", type: "open", q: "5. Какая среда разработки (IDE) устанавливается вместе с Unity по умолчанию? (два слова)", o: [], c: -1, openA: "Visual Studio", chrono: [] },
-            { stage: "", type: "open", q: "6. Что означает аббревиатура LTS в контексте версий Unity? (три слова на английском)", o: [], c: -1, openA: "Long Term Support", chrono: [] },
-            { stage: "", type: "open", q: "7. Как называется функция автозаполнения кода в Visual Studio? (одно слово)", o: [], c: -1, openA: "IntelliSense", chrono: [] },
-            { stage: "", type: "chrono", q: "8. Расположите в хронологической последовательности действия при создании первого скрипта:", o: [], c: -1, openA: "", chrono: ["Открыть Unity Hub и создать новый проект", "Выбрать объект Main Camera в иерархии", "Нажать Add Component и ввести имя скрипта", "Дважды кликнуть по файлу скрипта для открытия в IDE"] },
-            { stage: "", type: "open", q: "9. Как называется пространство в Unity, где размещаются все игровые объекты? (одно слово)", o: [], c: -1, openA: "сцена", chrono: [] },
-            { stage: "", type: "open", q: "10. C# является регистрозависимым языком. Напишите правильное написание: debug.log или Debug.Log?", o: [], c: -1, openA: "Debug.Log", chrono: [] },
+            { stage: "📅 Этап 1: Базовый синтаксис и среда разработки", type: "closed", q: "1. Какой символ обязательно ставить в конце инструкции в C#?", o: [". (точка)", "; (точка с запятой)", ": (двоеточие)", ", (запятая)"], c: 1, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "closed", q: "2. Какой метод Unity вызывается один раз при запуске сцены?", o: ["Update()", "Awake()", "Start()", "FixedUpdate()"], c: 2, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "closed", q: "3. Что означает LTS в контексте версий Unity?", o: ["Light Transport System", "Long Term Support", "Local Test Server", "Low Thread Speed"], c: 1, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "open", q: "4. Какая среда разработки (IDE) устанавливается вместе с Unity по умолчанию? (два слова)", o: [], c: -1, openA: "Visual Studio", chrono: [], multi: [] },
+            { stage: "", type: "closed", q: "5. Что делает директива using в начале скрипта?", o: ["Подключает пространства имён", "Запускает код", "Объявляет переменную", "Завершает программу"], c: 0, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "closed", q: "6. C# является регистрозависимым языком. Что из этого правильно?", o: ["debug.log", "Debug.Log", "DEBUG.LOG", "Debug.log"], c: 1, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "closed", q: "7. Как называются участки кода после символов //, которые игнорируются компилятором?", o: ["Директивы", "Комментарии", "Методы", "Переменные"], c: 1, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "multi", q: "8. Какие методы автоматически создаются в новом скрипте Unity? (выберите два)", o: ["Start()", "Update()", "Awake()", "FixedUpdate()"], c: [0, 1], openA: "", chrono: [], multi: [0, 1] },
+            { stage: "", type: "closed", q: "9. Где размещаются все игровые объекты в Unity?", o: ["В инспекторе", "В сцене", "В консоли", "В проекте"], c: 1, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "chrono", q: "10. Расположите в хронологической последовательности создание первого скрипта:", o: [], c: -1, openA: "", chrono: ["Создать новый проект в Unity Hub", "Выбрать объект в иерархии", "Нажать Add Component и ввести имя скрипта", "Открыть скрипт двойным кликом в IDE"], multi: [] },
 
-            // ===== ЭТАП 2: Переменные, типы данных, условия (11-20) =====
-            { stage: "📅 Этап 2: Переменные, типы данных, условные конструкции", type: "open", q: "11. Напишите строку кода для объявления целочисленной переменной score со значением 0.", o: [], c: -1, openA: "int score = 0;", chrono: [] },
-            { stage: "", type: "open", q: "12. Какой суффикс обязателен при записи числа 3.14 как float? Напишите число с суффиксом.", o: [], c: -1, openA: "3.14f", chrono: [] },
-            { stage: "", type: "closed", q: "13. Чему равно значение по умолчанию для типа bool?", o: ["true", "false", "null", "0"], c: 1, openA: "", chrono: [] },
-            { stage: "", type: "open", q: "14. Какой оператор увеличивает значение переменной на 1? Напишите его.", o: [], c: -1, openA: "++", chrono: [] },
-            { stage: "", type: "open", q: "15. Как называется стиль именования переменных, где первое слово с маленькой буквы, а остальные с большой (например: playerHealth)?", o: [], c: -1, openA: "camelCase", chrono: [] },
-            { stage: "", type: "chrono", q: "16. Расположите в порядке выполнения блоки условной конструкции:", o: [], c: -1, openA: "", chrono: ["Проверка условия в if", "Если true — выполнение блока if", "Если false — проверка условия в else if", "Если все false — выполнение блока else"] },
-            { stage: "", type: "open", q: "17. Напишите оператор, который возвращает true только если ОБА условия истинны (логическое И).", o: [], c: -1, openA: "&&", chrono: [] },
-            { stage: "", type: "open", q: "18. Напишите оператор, который возвращает true если ХОТЯ БЫ ОДНО условие истинно (логическое ИЛИ).", o: [], c: -1, openA: "||", chrono: [] },
-            { stage: "", type: "open", q: "19. Напишите ключевое слово, которое завершает блок case в конструкции switch.", o: [], c: -1, openA: "break", chrono: [] },
-            { stage: "", type: "open", q: "20. Какой оператор используется для проверки неравенства в C#? Напишите его.", o: [], c: -1, openA: "!=", chrono: [] },
+            // ===== ЭТАП 2: Переменные, типы, условия (11-20) =====
+            { stage: "📅 Этап 2: Переменные, типы данных, условные конструкции", type: "closed", q: "11. Какой тип данных используется для целых чисел?", o: ["float", "string", "int", "bool"], c: 2, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "closed", q: "12. Чему равно значение по умолчанию для типа int?", o: ["null", "0", "-1", "1"], c: 1, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "closed", q: "13. Какой суффикс обязателен при записи float-литерала 3.14?", o: ["d", "f", "m", "u"], c: 1, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "open", q: "14. Напишите оператор, который увеличивает переменную на 1.", o: [], c: -1, openA: "++", chrono: [], multi: [] },
+            { stage: "", type: "closed", q: "15. Чему равно значение по умолчанию для типа bool?", o: ["true", "false", "null", "0"], c: 1, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "closed", q: "16. Какой стиль именования переменных принят в C#?", o: ["PascalCase", "camelCase", "snake_case", "kebab-case"], c: 1, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "closed", q: "17. Что выведет: if (5 > 3) Debug.Log(\"Да\"); else Debug.Log(\"Нет\"); ?", o: ["Да", "Нет", "Ошибка", "Ничего"], c: 0, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "multi", q: "18. Какие из перечисленных являются логическими операторами в C#? (выберите два)", o: ["&&", "||", "+=", "++"], c: [0, 1], openA: "", chrono: [], multi: [0, 1] },
+            { stage: "", type: "closed", q: "19. Сколько блоков else можно использовать с одним if?", o: ["0", "1", "Сколько угодно", "2"], c: 1, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "chrono", q: "20. Расположите в порядке выполнения условную конструкцию:", o: [], c: -1, openA: "", chrono: ["Проверка условия в if", "Выполнение блока if (если true)", "Проверка условия в else if (если false)", "Выполнение блока else (если всё false)"], multi: [] },
 
             // ===== ЭТАП 3: Методы, массивы, классы (21-30) =====
-            { stage: "📅 Этап 3: Методы, массивы, циклы, классы и компоненты", type: "open", q: "21. Какое ключевое слово используется для метода, который не возвращает значение?", o: [], c: -1, openA: "void", chrono: [] },
-            { stage: "", type: "open", q: "22. Напишите ключевое слово, которое возвращает значение из метода.", o: [], c: -1, openA: "return", chrono: [] },
-            { stage: "", type: "closed", q: "23. С какого индекса начинается массив в C#?", o: ["1", "0", "-1", "Зависит от массива"], c: 1, openA: "", chrono: [] },
-            { stage: "", type: "open", q: "24. Напишите свойство (без скобок), которое возвращает длину массива arr.", o: [], c: -1, openA: "arr.Length", chrono: [] },
-            { stage: "", type: "open", q: "25. Напишите название метода для добавления элемента в List<T>.", o: [], c: -1, openA: "Add", chrono: [] },
-            { stage: "", type: "open", q: "26. Какая конструкция цикла перебирает все элементы коллекции без использования индекса? Напишите ключевое слово.", o: [], c: -1, openA: "foreach", chrono: [] },
-            { stage: "", type: "chrono", q: "27. Расположите в хронологической последовательности жизненный цикл компонента Unity:", o: [], c: -1, openA: "", chrono: ["Создание GameObject в сцене", "Прикрепление скрипта как компонента", "Вызов метода Start() при запуске сцены", "Вызов метода Update() каждый кадр"] },
-            { stage: "", type: "open", q: "28. Напишите ключевое слово, которое делает поле или метод принадлежащим классу в целом, а не конкретному экземпляру.", o: [], c: -1, openA: "static", chrono: [] },
-            { stage: "", type: "closed", q: "29. Какой модификатор доступа делает поле видимым в инспекторе Unity?", o: ["private", "protected", "public", "internal"], c: 2, openA: "", chrono: [] },
-            { stage: "", type: "open", q: "30. Как называется принцип написания кода без «магических чисел», с понятными именами и без дублирования? (два слова на английском)", o: [], c: -1, openA: "Clean Code", chrono: [] }
+            { stage: "📅 Этап 3: Методы, массивы, циклы, классы и компоненты", type: "closed", q: "21. Что означает void в объявлении метода?", o: ["Метод возвращает int", "Метод не возвращает значение", "Метод статический", "Метод приватный"], c: 1, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "closed", q: "22. Какое ключевое слово возвращает значение из метода?", o: ["break", "return", "continue", "exit"], c: 1, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "closed", q: "23. С какого индекса начинается массив в C#?", o: ["1", "0", "-1", "Зависит от массива"], c: 1, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "open", q: "24. Напишите название метода для добавления элемента в List<T>.", o: [], c: -1, openA: "Add", chrono: [], multi: [] },
+            { stage: "", type: "closed", q: "25. Какая конструкция перебирает все элементы коллекции без индекса?", o: ["for", "while", "foreach", "switch"], c: 2, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "closed", q: "26. От какого класса должны наследоваться скрипты-компоненты в Unity?", o: ["GameObject", "MonoBehaviour", "ComponentBase", "UnityScript"], c: 1, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "closed", q: "27. Какой модификатор делает поле видимым в инспекторе Unity?", o: ["private", "protected", "public", "internal"], c: 2, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "multi", q: "28. Какие методы можно использовать для поиска компонентов в Unity? (выберите два)", o: ["GetComponent<T>()", "FindObjectOfType<T>()", "CreateComponent<T>()", "DeleteComponent<T>()"], c: [0, 1], openA: "", chrono: [], multi: [0, 1] },
+            { stage: "", type: "closed", q: "29. Ключевое слово static означает, что поле принадлежит...", o: ["Конкретному объекту", "Классу в целом", "Только методам", "Только полям"], c: 1, openA: "", chrono: [], multi: [] },
+            { stage: "", type: "closed", q: "30. Что такое «магическое число» в контексте чистого кода?", o: ["Число 0", "Число без поясняющей переменной", "Максимальное int", "Случайное число"], c: 1, openA: "", chrono: [], multi: [] }
         ];
 
         var perPage = 10;
@@ -1506,6 +1517,15 @@ void Update()
                 var typeLabel = '';
                 if (item.type === 'open') typeLabel = '✏️ открытый';
                 else if (item.type === 'closed') typeLabel = '🔘 закрытый';
+					                } else if (item.type === 'multi') {
+                    h += '<p class="multi-hint">🔘 Выберите ВСЕ правильные варианты (клик для выбора/снятия), затем нажмите «Проверить».</p>';
+                    h += '<ul class="quiz-options">';
+                    for (var j = 0; j < item.o.length; j++) {
+                        var letter = String.fromCharCode(65 + j);
+                        h += '<li onclick="toggleMulti(' + i + ',' + j + ')" id="opt-' + i + '-' + j + '">' + letter + ') ' + item.o[j] + '</li>';
+                    }
+                    h += '</ul>';
+                    h += '<button class="check-btn" id="multi-check-' + i + '" onclick="checkMulti(' + i + ')" style="margin-top:0.5rem;">Проверить</button>';
                 else if (item.type === 'chrono') typeLabel = '🕐 хронологический';
 
                 h += '<div class="test-question" id="q' + i + '">';
@@ -1634,6 +1654,69 @@ void Update()
                 }
             }
 
+        // Проверка множественного выбора
+        function checkMulti(qi) {
+            var item = testData[qi];
+            var all = document.querySelectorAll('#q' + qi + ' .quiz-options li');
+            var btn = document.getElementById('multi-check-' + qi);
+            var msg = document.getElementById('msg-' + qi);
+
+            for (var k = 0; k < all.length; k++) {
+                if (all[k].classList.contains('correct') || all[k].classList.contains('incorrect')) return;
+            }
+
+            var selectedIndices = [];
+            for (var k = 0; k < all.length; k++) {
+                if (all[k].classList.contains('selected-multi')) {
+                    selectedIndices.push(k);
+                }
+            }
+
+            if (selectedIndices.length === 0) {
+                msg.textContent = '⚠️ Выберите хотя бы один вариант.';
+                msg.className = 'result-msg';
+                return;
+            }
+
+            for (var k = 0; k < all.length; k++) {
+                all[k].classList.add('answered');
+            }
+            if (btn) btn.disabled = true;
+
+            var correctSet = item.multi.slice().sort().join(',');
+            var userSet = selectedIndices.slice().sort().join(',');
+
+            if (userSet === correctSet) {
+                for (var k = 0; k < selectedIndices.length; k++) {
+                    all[selectedIndices[k]].classList.add('correct');
+                }
+                msg.textContent = '✅ Правильно!';
+                msg.className = 'result-msg green';
+            } else {
+                for (var k = 0; k < selectedIndices.length; k++) {
+                    if (item.multi.indexOf(selectedIndices[k]) === -1) {
+                        all[selectedIndices[k]].classList.add('incorrect');
+                    } else {
+                        all[selectedIndices[k]].classList.add('correct');
+                    }
+                }
+                for (var k = 0; k < item.multi.length; k++) {
+                    if (selectedIndices.indexOf(item.multi[k]) === -1) {
+                        all[item.multi[k]].classList.add('correct');
+                    }
+                }
+                msg.textContent = '❌ Неправильно. Все правильные ответы выделены зелёным.';
+                msg.className = 'result-msg red';
+            }
+        }
+
+        // Переключение выбора для множественного выбора
+        function toggleMulti(qi, oi) {
+            var all = document.querySelectorAll('#q' + qi + ' .quiz-options li');
+            if (all.length > 0 && all[0].classList.contains('answered')) return;
+            var el = document.getElementById('opt-' + qi + '-' + oi);
+            if (el) el.classList.toggle('selected-multi');
+        }
             // Блокируем перетаскивание
             list.classList.add('disabled');
             btn.disabled = true;
@@ -1744,6 +1827,13 @@ void Update()
                     input.classList.remove('correct-input', 'incorrect-input');
                 }
                 if (btn) btn.disabled = false;
+				            } else if (item.type === 'multi') {
+                var all = document.querySelectorAll('#q' + qi + ' .quiz-options li');
+                for (var k = 0; k < all.length; k++) {
+                    all[k].classList.remove('answered', 'correct', 'incorrect', 'selected-multi');
+                }
+                var btn = document.getElementById('multi-check-' + qi);
+                if (btn) btn.disabled = false;
             } else if (item.type === 'chrono') {
                 var list = document.getElementById('chrono-' + qi);
                 var btn = document.getElementById('chrono-check-' + qi);
@@ -1770,7 +1860,69 @@ void Update()
                 msg.className = 'result-msg';
             }
         }
+        // Проверка множественного выбора
+        function checkMulti(qi) {
+            var item = testData[qi];
+            var all = document.querySelectorAll('#q' + qi + ' .quiz-options li');
+            var btn = document.getElementById('multi-check-' + qi);
+            var msg = document.getElementById('msg-' + qi);
 
+            for (var k = 0; k < all.length; k++) {
+                if (all[k].classList.contains('correct') || all[k].classList.contains('incorrect')) return;
+            }
+
+            var selectedIndices = [];
+            for (var k = 0; k < all.length; k++) {
+                if (all[k].classList.contains('selected-multi')) {
+                    selectedIndices.push(k);
+                }
+            }
+
+            if (selectedIndices.length === 0) {
+                msg.textContent = '⚠️ Выберите хотя бы один вариант.';
+                msg.className = 'result-msg';
+                return;
+            }
+
+            for (var k = 0; k < all.length; k++) {
+                all[k].classList.add('answered');
+            }
+            btn.disabled = true;
+
+            var correctSet = item.multi.slice().sort().join(',');
+            var userSet = selectedIndices.slice().sort().join(',');
+
+            if (userSet === correctSet) {
+                for (var k = 0; k < selectedIndices.length; k++) {
+                    all[selectedIndices[k]].classList.add('correct');
+                }
+                msg.textContent = '✅ Правильно!';
+                msg.className = 'result-msg green';
+            } else {
+                for (var k = 0; k < selectedIndices.length; k++) {
+                    if (item.multi.indexOf(selectedIndices[k]) === -1) {
+                        all[selectedIndices[k]].classList.add('incorrect');
+                    } else {
+                        all[selectedIndices[k]].classList.add('correct');
+                    }
+                }
+                for (var k = 0; k < item.multi.length; k++) {
+                    if (selectedIndices.indexOf(item.multi[k]) === -1) {
+                        all[item.multi[k]].classList.add('correct');
+                    }
+                }
+                msg.textContent = '❌ Неправильно. Все правильные ответы выделены зелёным.';
+                msg.className = 'result-msg red';
+            }
+        }
+
+        // Переключение выбора для множественного выбора
+        function toggleMulti(qi, oi) {
+            var all = document.querySelectorAll('#q' + qi + ' .quiz-options li');
+            if (all[0].classList.contains('answered')) return;
+            var el = document.getElementById('opt-' + qi + '-' + oi);
+            el.classList.toggle('selected-multi');
+        }
         window.addEventListener('load', function() {
             if (document.getElementById('page-tests').classList.contains('active')) {
                 renderTestNav();
