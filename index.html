@@ -1392,16 +1392,12 @@ void Update()
         <div class="page" id="page-tests">
             <div class="card">
                 <h2>Тестовые задания (30 вопросов)</h2>
-                <p>📅 Вопросы разбиты по этапам изучения — от основ синтаксиса до классов и компонентов. Закрытые — выбор варианта, открытые — ввод ответа.</p>
+                <p>📅 Вопросы разбиты по этапам изучения — от основ синтаксиса до классов и компонентов.</p>
                 <div class="test-nav" id="testNav"></div>
                 <div id="testContainer"></div>
             </div>
         </div>
-
-    </main>
-
-               <script>
-        // --- Навигация по страницам ---
+    <script>
         function showPage(name) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             var page = document.getElementById('page-' + name);
@@ -1422,7 +1418,6 @@ void Update()
             if (main) main.scrollTop = 0;
         }
 
-        // --- Данные тестов ---
         var testData = [
             { stage: "📅 Этап 1: Базовый синтаксис и среда разработки", type: "closed", q: "1. Какой символ обязательно ставить в конце инструкции в C#?", o: [". (точка)", "; (точка с запятой)", ": (двоеточие)", ", (запятая)"], c: 1, openA: "", chrono: [], multi: [] },
             { stage: "", type: "closed", q: "2. Какой метод Unity вызывается один раз при запуске сцены?", o: ["Update()", "Awake()", "Start()", "FixedUpdate()"], c: 2, openA: "", chrono: [], multi: [] },
@@ -1456,10 +1451,7 @@ void Update()
             { stage: "", type: "closed", q: "30. Что такое «магическое число» в контексте чистого кода?", o: ["Число 0", "Число без поясняющей переменной", "Максимальное int", "Случайное число"], c: 1, openA: "", chrono: [], multi: [] }
         ];
 
-        var perPage = 10;
-        var currentPage = 0;
-        var totalPages = Math.ceil(testData.length / perPage);
-        var chronoOrders = {};
+        var perPage = 10, currentPage = 0, totalPages = Math.ceil(testData.length / perPage), chronoOrders = {};
 
         function renderTestNav() {
             var nav = document.getElementById('testNav');
@@ -1471,13 +1463,7 @@ void Update()
                 var e = Math.min((i + 1) * perPage, testData.length);
                 btn.textContent = s + '–' + e;
                 if (i === currentPage) btn.className = 'active-page';
-                btn.onclick = (function(p) {
-                    return function() {
-                        currentPage = p;
-                        renderTestNav();
-                        renderTestPage();
-                    };
-                })(i);
+                btn.onclick = (function(p) { return function() { currentPage = p; renderTestNav(); renderTestPage(); }; })(i);
                 nav.appendChild(btn);
             }
         }
@@ -1486,9 +1472,7 @@ void Update()
             var a = arr.slice();
             for (var i = a.length - 1; i > 0; i--) {
                 var j = Math.floor(Math.random() * (i + 1));
-                var temp = a[i];
-                a[i] = a[j];
-                a[j] = temp;
+                var temp = a[i]; a[i] = a[j]; a[j] = temp;
             }
             return a;
         }
@@ -1496,77 +1480,50 @@ void Update()
         function renderTestPage() {
             var container = document.getElementById('testContainer');
             if (!container) return;
-            var s = currentPage * perPage;
-            var e = Math.min(s + perPage, testData.length);
-            var h = '';
-            var currentStage = '';
+            var s = currentPage * perPage, e = Math.min(s + perPage, testData.length), h = '', currentStage = '';
             for (var i = s; i < e; i++) {
                 var item = testData[i];
                 if (item.stage && item.stage !== currentStage) {
                     currentStage = item.stage;
                     h += '<div class="stage-header">' + currentStage + '</div>';
                 }
-
-                var typeLabel = '';
-                if (item.type === 'open') typeLabel = '✏️ открытый';
-                else if (item.type === 'closed') typeLabel = '🔘 закрытый';
-                else if (item.type === 'multi') typeLabel = '☑️ множественный выбор';
-                else if (item.type === 'chrono') typeLabel = '🕐 хронологический';
-
-                h += '<div class="test-question" id="q' + i + '">';
-                h += '<div class="q">' + item.q + ' <span style="font-size:0.75rem;color:#64748b;">(' + typeLabel + ')</span></div>';
+                var typeLabel = item.type === 'open' ? '✏️ открытый' : item.type === 'closed' ? '🔘 закрытый' : item.type === 'multi' ? '☑️ множественный' : '🕐 хронологический';
+                h += '<div class="test-question" id="q' + i + '"><div class="q">' + item.q + ' <span style="font-size:0.75rem;color:#64748b;">(' + typeLabel + ')</span></div>';
 
                 if (item.type === 'closed') {
                     h += '<ul class="quiz-options">';
                     for (var j = 0; j < item.o.length; j++) {
-                        var letter = String.fromCharCode(65 + j);
-                        h += '<li onclick="checkClosed(' + i + ',' + j + ')" id="opt-' + i + '-' + j + '">' + letter + ') ' + item.o[j] + '</li>';
+                        h += '<li onclick="checkClosed(' + i + ',' + j + ')" id="opt-' + i + '-' + j + '">' + String.fromCharCode(65 + j) + ') ' + item.o[j] + '</li>';
                     }
                     h += '</ul>';
                 } else if (item.type === 'open') {
                     h += '<div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">';
                     h += '<input type="text" class="open-answer-input" id="open-' + i + '" placeholder="Введите ответ...">';
-                    h += '<button class="check-btn" id="check-btn-' + i + '" onclick="checkOpen(' + i + ')">Проверить</button>';
-                    h += '</div>';
+                    h += '<button class="check-btn" id="check-btn-' + i + '" onclick="checkOpen(' + i + ')">Проверить</button></div>';
                 } else if (item.type === 'multi') {
-                    h += '<p class="multi-hint">🔘 Выберите ВСЕ правильные варианты (клик для выбора/снятия), затем нажмите «Проверить».</p>';
-                    h += '<ul class="quiz-options">';
+                    h += '<p class="multi-hint">🔘 Выберите ВСЕ правильные варианты, затем нажмите «Проверить».</p><ul class="quiz-options">';
                     for (var j = 0; j < item.o.length; j++) {
-                        var letter = String.fromCharCode(65 + j);
-                        h += '<li onclick="toggleMulti(' + i + ',' + j + ')" id="opt-' + i + '-' + j + '">' + letter + ') ' + item.o[j] + '</li>';
+                        h += '<li onclick="toggleMulti(' + i + ',' + j + ')" id="opt-' + i + '-' + j + '">' + String.fromCharCode(65 + j) + ') ' + item.o[j] + '</li>';
                     }
-                    h += '</ul>';
-                    h += '<button class="check-btn" id="multi-check-' + i + '" onclick="checkMulti(' + i + ')" style="margin-top:0.5rem;">Проверить</button>';
+                    h += '</ul><button class="check-btn" id="multi-check-' + i + '" onclick="checkMulti(' + i + ')" style="margin-top:0.5rem;">Проверить</button>';
                 } else if (item.type === 'chrono') {
-                    if (!chronoOrders[i]) {
-                        chronoOrders[i] = shuffleArray(item.chrono);
-                    }
-                    h += '<p class="chrono-hint">🖱 Перетащите элементы в правильном порядке (от раннего к позднему).</p>';
-                    h += '<ul class="chrono-list" id="chrono-' + i + '">';
+                    if (!chronoOrders[i]) chronoOrders[i] = shuffleArray(item.chrono);
+                    h += '<p class="chrono-hint">🖱 Перетащите элементы в правильном порядке.</p><ul class="chrono-list" id="chrono-' + i + '">';
                     for (var k = 0; k < chronoOrders[i].length; k++) {
-                        h += '<li draggable="true" data-index="' + k + '" data-original="' + chronoOrders[i][k].replace(/"/g, '&quot;') + '" id="chrono-item-' + i + '-' + k + '">';
-                        h += '<span class="chrono-num">' + (k + 1) + '</span>';
-                        h += chronoOrders[i][k];
-                        h += '</li>';
+                        h += '<li draggable="true" data-index="' + k + '" data-original="' + chronoOrders[i][k].replace(/"/g, '&quot;') + '" id="chrono-item-' + i + '-' + k + '"><span class="chrono-num">' + (k + 1) + '</span>' + chronoOrders[i][k] + '</li>';
                     }
-                    h += '</ul>';
-                    h += '<button class="check-btn" id="chrono-check-' + i + '" onclick="checkChrono(' + i + ')" style="margin-top:0.5rem;">Проверить порядок</button>';
+                    h += '</ul><button class="check-btn" id="chrono-check-' + i + '" onclick="checkChrono(' + i + ')" style="margin-top:0.5rem;">Проверить порядок</button>';
                 }
-
-                h += '<div class="result-msg" id="msg-' + i + '"></div>';
-                h += '<button class="reset-btn" onclick="resetQuestion(' + i + ')">🔄 Попробовать снова</button>';
-                h += '</div>';
+                h += '<div class="result-msg" id="msg-' + i + '"></div><button class="reset-btn" onclick="resetQuestion(' + i + ')">🔄 Попробовать снова</button></div>';
             }
             container.innerHTML = h;
             enableDragDrop();
         }
 
         function enableDragDrop() {
-            var lists = document.querySelectorAll('.chrono-list');
-            lists.forEach(function(list) {
+            document.querySelectorAll('.chrono-list').forEach(function(list) {
                 if (list.classList.contains('disabled')) return;
-                var items = list.querySelectorAll('li');
-                items.forEach(function(item) {
+                list.querySelectorAll('li').forEach(function(item) {
                     item.addEventListener('dragstart', handleDragStart);
                     item.addEventListener('dragover', handleDragOver);
                     item.addEventListener('drop', handleDrop);
@@ -1577,184 +1534,64 @@ void Update()
 
         var dragSrcIndex = null;
 
-        function handleDragStart(e) {
-            dragSrcIndex = parseInt(this.getAttribute('data-index'));
-            this.style.opacity = '0.5';
-            e.dataTransfer.effectAllowed = 'move';
-        }
-
-        function handleDragOver(e) {
-            if (e.preventDefault) e.preventDefault();
-            e.dataTransfer.dropEffect = 'move';
-            return false;
-        }
-
+        function handleDragStart(e) { dragSrcIndex = parseInt(this.getAttribute('data-index')); this.style.opacity = '0.5'; e.dataTransfer.effectAllowed = 'move'; }
+        function handleDragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; return false; }
         function handleDrop(e) {
-            if (e.stopPropagation) e.stopPropagation();
+            e.stopPropagation();
             if (dragSrcIndex === null) return;
             var targetIndex = parseInt(this.getAttribute('data-index'));
             if (dragSrcIndex !== targetIndex) {
                 var list = this.parentNode;
                 var srcItem = list.querySelector('#chrono-item-' + list.id.replace('chrono-', '') + '-' + dragSrcIndex);
-                if (targetIndex > dragSrcIndex) {
-                    this.parentNode.insertBefore(srcItem, this.nextSibling);
-                } else {
-                    this.parentNode.insertBefore(srcItem, this);
-                }
+                if (targetIndex > dragSrcIndex) this.parentNode.insertBefore(srcItem, this.nextSibling);
+                else this.parentNode.insertBefore(srcItem, this);
                 var allItems = list.querySelectorAll('li');
-                for (var i = 0; i < allItems.length; i++) {
-                    allItems[i].setAttribute('data-index', i);
-                    allItems[i].querySelector('.chrono-num').textContent = (i + 1);
-                }
+                for (var i = 0; i < allItems.length; i++) { allItems[i].setAttribute('data-index', i); allItems[i].querySelector('.chrono-num').textContent = (i + 1); }
             }
             this.style.opacity = '1';
             return false;
         }
-
-        function handleDragEnd(e) {
-            this.style.opacity = '1';
-            dragSrcIndex = null;
-        }
+        function handleDragEnd(e) { this.style.opacity = '1'; dragSrcIndex = null; }
 
         function checkChrono(qi) {
-            var item = testData[qi];
-            var list = document.getElementById('chrono-' + qi);
-            var btn = document.getElementById('chrono-check-' + qi);
-            var msg = document.getElementById('msg-' + qi);
+            var item = testData[qi], list = document.getElementById('chrono-' + qi), btn = document.getElementById('chrono-check-' + qi), msg = document.getElementById('msg-' + qi);
             if (!list || list.classList.contains('disabled')) return;
-            var items = list.querySelectorAll('li');
-            var userOrder = [];
-            for (var i = 0; i < items.length; i++) {
-                userOrder.push(items[i].getAttribute('data-original'));
-            }
+            var items = list.querySelectorAll('li'), userOrder = [];
+            for (var i = 0; i < items.length; i++) userOrder.push(items[i].getAttribute('data-original'));
             var allCorrect = true;
-            for (var i = 0; i < item.chrono.length; i++) {
-                if (userOrder[i] !== item.chrono[i]) {
-                    allCorrect = false;
-                    break;
-                }
-            }
-            list.classList.add('disabled');
-            btn.disabled = true;
-            if (allCorrect) {
-                for (var i = 0; i < items.length; i++) {
-                    items[i].classList.add('correct-order');
-                }
-                msg.textContent = '✅ Правильно! Верная хронологическая последовательность.';
-                msg.className = 'result-msg green';
-            } else {
-                for (var i = 0; i < items.length; i++) {
-                    if (userOrder[i] !== item.chrono[i]) {
-                        items[i].classList.add('wrong-order');
-                    } else {
-                        items[i].classList.add('correct-order');
-                    }
-                }
-                msg.textContent = '❌ Неправильно. Правильный порядок: ' + item.chrono.join(' → ');
-                msg.className = 'result-msg red';
-            }
+            for (var i = 0; i < item.chrono.length; i++) { if (userOrder[i] !== item.chrono[i]) { allCorrect = false; break; } }
+            list.classList.add('disabled'); btn.disabled = true;
+            if (allCorrect) { for (var i = 0; i < items.length; i++) items[i].classList.add('correct-order'); msg.textContent = '✅ Правильно!'; msg.className = 'result-msg green'; }
+            else { for (var i = 0; i < items.length; i++) { if (userOrder[i] !== item.chrono[i]) items[i].classList.add('wrong-order'); else items[i].classList.add('correct-order'); } msg.textContent = '❌ Неправильно. Порядок: ' + item.chrono.join(' → '); msg.className = 'result-msg red'; }
         }
 
         function checkClosed(qi, oi) {
-            var item = testData[qi];
-            var all = document.querySelectorAll('#q' + qi + ' .quiz-options li');
-            var msg = document.getElementById('msg-' + qi);
-            for (var k = 0; k < all.length; k++) {
-                if (all[k].classList.contains('correct') || all[k].classList.contains('incorrect')) return;
-            }
-            for (var k = 0; k < all.length; k++) {
-                all[k].classList.add('answered');
-            }
-            if (oi === item.c) {
-                all[oi].classList.add('correct');
-                msg.textContent = '✅ Правильно!';
-                msg.className = 'result-msg green';
-            } else {
-                all[oi].classList.add('incorrect');
-                all[item.c].classList.add('correct');
-                msg.textContent = '❌ Неправильно. Верный ответ выделен зелёным.';
-                msg.className = 'result-msg red';
-            }
+            var item = testData[qi], all = document.querySelectorAll('#q' + qi + ' .quiz-options li'), msg = document.getElementById('msg-' + qi);
+            for (var k = 0; k < all.length; k++) { if (all[k].classList.contains('correct') || all[k].classList.contains('incorrect')) return; }
+            for (var k = 0; k < all.length; k++) all[k].classList.add('answered');
+            if (oi === item.c) { all[oi].classList.add('correct'); msg.textContent = '✅ Правильно!'; msg.className = 'result-msg green'; }
+            else { all[oi].classList.add('incorrect'); all[item.c].classList.add('correct'); msg.textContent = '❌ Неправильно.'; msg.className = 'result-msg red'; }
         }
 
         function checkOpen(qi) {
-            var input = document.getElementById('open-' + qi);
-            var btn = document.getElementById('check-btn-' + qi);
-            var msg = document.getElementById('msg-' + qi);
-            var item = testData[qi];
+            var input = document.getElementById('open-' + qi), btn = document.getElementById('check-btn-' + qi), msg = document.getElementById('msg-' + qi), item = testData[qi];
             if (!input || input.classList.contains('correct-input') || input.classList.contains('incorrect-input')) return;
-            var userAnswer = input.value.trim();
-            var correctAnswer = item.openA.trim();
-            var isCodeAnswer = correctAnswer.includes('(') || correctAnswer.includes(';') || correctAnswer.includes('.');
-            var isCorrect;
-            if (isCodeAnswer) {
-                isCorrect = (userAnswer === correctAnswer) || (userAnswer === correctAnswer.replace(';', ''));
-            } else {
-                isCorrect = userAnswer.toLowerCase() === correctAnswer.toLowerCase();
-            }
-            if (!isCorrect && correctAnswer === "Visual Studio") {
-                isCorrect = (userAnswer.toLowerCase() === "visual studio" || userAnswer.toLowerCase() === "vs" || userAnswer.toLowerCase() === "visualstudio");
-            }
-            if (isCorrect) {
-                input.classList.add('correct-input');
-                btn.disabled = true;
-                msg.textContent = '✅ Правильно!';
-                msg.className = 'result-msg green';
-            } else {
-                input.classList.add('incorrect-input');
-                btn.disabled = true;
-                msg.textContent = '❌ Неправильно. Правильный ответ: ' + item.openA;
-                msg.className = 'result-msg red';
-            }
+            var ua = input.value.trim(), ca = item.openA.trim(), isCorrect = ua.toLowerCase() === ca.toLowerCase();
+            if (!isCorrect && ca === "Visual Studio") isCorrect = (ua.toLowerCase() === "visual studio" || ua.toLowerCase() === "vs");
+            if (isCorrect) { input.classList.add('correct-input'); btn.disabled = true; msg.textContent = '✅ Правильно!'; msg.className = 'result-msg green'; }
+            else { input.classList.add('incorrect-input'); btn.disabled = true; msg.textContent = '❌ Ответ: ' + item.openA; msg.className = 'result-msg red'; }
         }
 
         function checkMulti(qi) {
-            var item = testData[qi];
-            var all = document.querySelectorAll('#q' + qi + ' .quiz-options li');
-            var btn = document.getElementById('multi-check-' + qi);
-            var msg = document.getElementById('msg-' + qi);
-            for (var k = 0; k < all.length; k++) {
-                if (all[k].classList.contains('correct') || all[k].classList.contains('incorrect')) return;
-            }
-            var selectedIndices = [];
-            for (var k = 0; k < all.length; k++) {
-                if (all[k].classList.contains('selected-multi')) {
-                    selectedIndices.push(k);
-                }
-            }
-            if (selectedIndices.length === 0) {
-                msg.textContent = '⚠️ Выберите хотя бы один вариант.';
-                msg.className = 'result-msg';
-                return;
-            }
-            for (var k = 0; k < all.length; k++) {
-                all[k].classList.add('answered');
-            }
+            var item = testData[qi], all = document.querySelectorAll('#q' + qi + ' .quiz-options li'), btn = document.getElementById('multi-check-' + qi), msg = document.getElementById('msg-' + qi);
+            for (var k = 0; k < all.length; k++) { if (all[k].classList.contains('correct') || all[k].classList.contains('incorrect')) return; }
+            var sel = [];
+            for (var k = 0; k < all.length; k++) { if (all[k].classList.contains('selected-multi')) sel.push(k); }
+            if (sel.length === 0) { msg.textContent = '⚠️ Выберите хотя бы один вариант.'; return; }
+            for (var k = 0; k < all.length; k++) all[k].classList.add('answered');
             if (btn) btn.disabled = true;
-            var correctSet = item.multi.slice().sort().join(',');
-            var userSet = selectedIndices.slice().sort().join(',');
-            if (userSet === correctSet) {
-                for (var k = 0; k < selectedIndices.length; k++) {
-                    all[selectedIndices[k]].classList.add('correct');
-                }
-                msg.textContent = '✅ Правильно!';
-                msg.className = 'result-msg green';
-            } else {
-                for (var k = 0; k < selectedIndices.length; k++) {
-                    if (item.multi.indexOf(selectedIndices[k]) === -1) {
-                        all[selectedIndices[k]].classList.add('incorrect');
-                    } else {
-                        all[selectedIndices[k]].classList.add('correct');
-                    }
-                }
-                for (var k = 0; k < item.multi.length; k++) {
-                    if (selectedIndices.indexOf(item.multi[k]) === -1) {
-                        all[item.multi[k]].classList.add('correct');
-                    }
-                }
-                msg.textContent = '❌ Неправильно. Все правильные ответы выделены зелёным.';
-                msg.className = 'result-msg red';
-            }
+            if (sel.slice().sort().join(',') === item.multi.slice().sort().join(',')) { for (var k = 0; k < sel.length; k++) all[sel[k]].classList.add('correct'); msg.textContent = '✅ Правильно!'; msg.className = 'result-msg green'; }
+            else { for (var k = 0; k < sel.length; k++) { if (item.multi.indexOf(sel[k]) === -1) all[sel[k]].classList.add('incorrect'); else all[sel[k]].classList.add('correct'); } for (var k = 0; k < item.multi.length; k++) { if (sel.indexOf(item.multi[k]) === -1) all[item.multi[k]].classList.add('correct'); } msg.textContent = '❌ Неправильно.'; msg.className = 'result-msg red'; }
         }
 
         function toggleMulti(qi, oi) {
@@ -1766,45 +1603,12 @@ void Update()
 
         function resetQuestion(qi) {
             var item = testData[qi];
-            if (item.type === 'closed') {
-                var all = document.querySelectorAll('#q' + qi + ' .quiz-options li');
-                for (var k = 0; k < all.length; k++) {
-                    all[k].classList.remove('answered', 'correct', 'incorrect');
-                }
-            } else if (item.type === 'open') {
-                var input = document.getElementById('open-' + qi);
-                var btn = document.getElementById('check-btn-' + qi);
-                if (input) {
-                    input.value = '';
-                    input.classList.remove('correct-input', 'incorrect-input');
-                }
-                if (btn) btn.disabled = false;
-            } else if (item.type === 'multi') {
-                var all = document.querySelectorAll('#q' + qi + ' .quiz-options li');
-                for (var k = 0; k < all.length; k++) {
-                    all[k].classList.remove('answered', 'correct', 'incorrect', 'selected-multi');
-                }
-                var btn = document.getElementById('multi-check-' + qi);
-                if (btn) btn.disabled = false;
-            } else if (item.type === 'chrono') {
-                chronoOrders[qi] = shuffleArray(testData[qi].chrono);
-                var testContainer = document.getElementById('testContainer');
-                if (testContainer) {
-                    renderTestPage();
-                }
-                return;
-            }
-            var msg = document.getElementById('msg-' + qi);
-            if (msg) {
-                msg.textContent = '';
-                msg.className = 'result-msg';
-            }
+            if (item.type === 'closed') { var all = document.querySelectorAll('#q' + qi + ' .quiz-options li'); for (var k = 0; k < all.length; k++) all[k].classList.remove('answered', 'correct', 'incorrect'); }
+            else if (item.type === 'open') { var inp = document.getElementById('open-' + qi), btn = document.getElementById('check-btn-' + qi); if (inp) { inp.value = ''; inp.classList.remove('correct-input', 'incorrect-input'); } if (btn) btn.disabled = false; }
+            else if (item.type === 'multi') { var all = document.querySelectorAll('#q' + qi + ' .quiz-options li'); for (var k = 0; k < all.length; k++) all[k].classList.remove('answered', 'correct', 'incorrect', 'selected-multi'); var btn = document.getElementById('multi-check-' + qi); if (btn) btn.disabled = false; }
+            else if (item.type === 'chrono') { chronoOrders[qi] = shuffleArray(testData[qi].chrono); renderTestPage(); return; }
+            var msg = document.getElementById('msg-' + qi); if (msg) { msg.textContent = ''; msg.className = 'result-msg'; }
         }
 
-        window.addEventListener('load', function() {
-            if (document.getElementById('page-tests').classList.contains('active')) {
-                renderTestNav();
-                renderTestPage();
-            }
-        });
+        window.addEventListener('load', function() { if (document.getElementById('page-tests') && document.getElementById('page-tests').classList.contains('active')) { renderTestNav(); renderTestPage(); } });
     </script>
