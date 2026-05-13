@@ -425,6 +425,65 @@
             border-color: var(--green);
             box-shadow: 0 4px 20px rgba(0, 230, 118, 0.4);
         }
+		        /* Стили для открытых вопросов */
+        .open-answer-input {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: #fff;
+            padding: 0.65rem 1rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            font-family: 'Cascadia Code', 'Fira Code', monospace;
+            width: 100%;
+            max-width: 400px;
+            transition: var(--transition);
+            outline: none;
+        }
+        .open-answer-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+        .open-answer-input.correct-input {
+            border-color: var(--green) !important;
+            background: rgba(0, 230, 118, 0.1) !important;
+        }
+        .open-answer-input.incorrect-input {
+            border-color: var(--red) !important;
+            background: rgba(255, 82, 87, 0.1) !important;
+        }
+        .check-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 0.65rem 1.2rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.88rem;
+            margin-left: 0.5rem;
+            transition: var(--transition);
+        }
+        .check-btn:hover {
+            background: #7c6ef7;
+            box-shadow: 0 4px 16px var(--accent-glow);
+        }
+        .check-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .stage-header {
+            background: linear-gradient(135deg, rgba(108,92,231,0.2), rgba(108,92,231,0.05));
+            border-left: 4px solid var(--accent);
+            padding: 0.8rem 1.2rem;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            margin: 2rem 0 1rem;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #c4b5fd;
+        }
+        .stage-header:first-child {
+            margin-top: 0;
+        }
     </style>
 </head>
 <body>
@@ -1256,11 +1315,11 @@ void Update()
             </div>
         </div>
 
-        <!-- ===== ТЕСТЫ (30 вопросов) ===== -->
+               <!-- ===== ТЕСТЫ (30 вопросов) ===== -->
         <div class="page" id="page-tests">
             <div class="card">
                 <h2>Тестовые задания (30 вопросов)</h2>
-                <p>Выберите вариант ответа — результат покажется сразу.</p>
+                <p>📅 Вопросы разбиты по этапам изучения — от основ синтаксиса до классов и компонентов. Закрытые — выбор варианта, открытые — ввод ответа.</p>
                 <div class="test-nav" id="testNav"></div>
                 <div id="testContainer"></div>
             </div>
@@ -1268,7 +1327,7 @@ void Update()
 
     </main>
 
-    <script>
+        <script>
         // --- Навигация по страницам ---
         function showPage(name) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1290,38 +1349,49 @@ void Update()
             if (main) main.scrollTop = 0;
         }
 
-        // --- Данные тестов ---
+        // --- Данные тестов: 6 этапов, 30 вопросов ---
         var testData = [
-            { q: "1. Какой символ обязательно ставить в конце инструкции в C#?", o: [". (точка)", "; (точка с запятой)", ": (двоеточие)", ", (запятая)"], c: 1 },
-            { q: "2. Какой метод вызывается один раз при запуске сцены в Unity?", o: ["Update()", "Awake()", "Start()", "FixedUpdate()"], c: 2 },
-            { q: "3. Что делает директива using в начале скрипта?", o: ["Подключает пространства имён", "Запускает код", "Объявляет переменную", "Завершает программу"], c: 0 },
-            { q: "4. Что означает LTS в контексте версий Unity?", o: ["Light Transport System", "Long Term Support", "Local Test Server", "Low Thread Speed"], c: 1 },
-            { q: "5. Как объявить целочисленную переменную score?", o: ["int score;", "var score;", "float score;", "string score;"], c: 0 },
-            { q: "6. Чему равно значение по умолчанию для типа int?", o: ["null", "0", "-1", "1"], c: 1 },
-            { q: "7. Какой суффикс обязателен при записи float-литерала?", o: ["d", "f", "m", "u"], c: 1 },
-            { q: "8. Какой оператор увеличивает переменную на 1?", o: ["+=", "++", "==", "&&"], c: 1 },
-            { q: "9. Что вернёт выражение: bool b = (5 > 3); ?", o: ["false", "true", "null", "ошибка"], c: 1 },
-            { q: "10. Как объединить строку \"Hello\" и переменную name?", o: ["\"Hello\" & name", "\"Hello\" + name", "\"Hello\" , name", "\"Hello\" . name"], c: 1 },
-            { q: "11. Чему равно значение по умолчанию для bool?", o: ["true", "false", "0", "null"], c: 1 },
-            { q: "12. Что выведет: if (false) Debug.Log(\"A\"); else Debug.Log(\"B\"); ?", o: ["A", "B", "ничего", "ошибка"], c: 1 },
-            { q: "13. Для чего нужен оператор && ?", o: ["Логическое ИЛИ", "Логическое И", "Побитовое И", "Сравнение"], c: 1 },
-            { q: "14. Как инвертировать булево значение?", o: ["Оператор ~", "Оператор !", "Оператор ^", "Оператор -"], c: 1 },
-            { q: "15. Что такое метод в C#?", o: ["Переменная", "Именованный блок кода", "Тип данных", "Файл"], c: 1 },
-            { q: "16. Что означает void в объявлении метода?", o: ["Возвращает int", "Не возвращает значение", "Статический", "Приватный"], c: 1 },
-            { q: "17. Как вернуть значение из метода?", o: ["break", "return", "continue", "exit"], c: 1 },
-            { q: "18. Где доступна переменная, объявленная внутри метода?", o: ["Везде", "Только внутри метода", "Во всех методах класса", "Во всей сцене"], c: 1 },
-            { q: "19. Что такое аргумент метода?", o: ["Имя метода", "Тип возврата", "Значение при вызове", "Локальная переменная"], c: 2 },
-            { q: "20. С какого индекса начинается массив в C#?", o: ["1", "0", "-1", "произвольного"], c: 1 },
-            { q: "21. Как узнать длину массива arr?", o: ["arr.Count", "arr.Length", "arr.Size", "length(arr)"], c: 1 },
-            { q: "22. Какая коллекция динамически меняет размер?", o: ["Массив", "List<T>", "Строка", "Структура"], c: 1 },
-            { q: "23. Какой метод добавляет элемент в List?", o: ["Insert()", "Add()", "Push()", "Append()"], c: 1 },
-            { q: "24. Чем отличается while от do...while?", o: ["Ничем", "do...while выполнится хотя бы раз", "while быстрее", "do...while без условия"], c: 1 },
-            { q: "25. Какая конструкция перебирает без индекса?", o: ["for", "while", "foreach", "switch"], c: 2 },
-            { q: "26. Что такое MonoBehaviour?", o: ["Тип данных", "Базовый класс компонентов Unity", "Метод", "Игровой объект"], c: 1 },
-            { q: "27. Как получить компонент того же объекта?", o: ["FindObjectOfType<T>()", "GetComponent<T>()", "CreateComponent<T>()", "AddComponent<T>()"], c: 1 },
-            { q: "28. Ключевое слово static означает...", o: ["Только для чтения", "Принадлежит классу, не экземпляру", "Скрыто", "Без возврата"], c: 1 },
-            { q: "29. Какой модификатор делает поле видимым в инспекторе?", o: ["private", "protected", "public", "internal"], c: 2 },
-            { q: "30. Что такое «магическое число»?", o: ["Всегда 0", "Число без поясняющей переменной", "Макс. int", "Случайное"], c: 1 }
+            // ЭТАП 1: Базовый синтаксис (1-5)
+            { stage: "📅 Этап 1: Базовый синтаксис и среда разработки", type: "closed", q: "1. Какой символ обязательно ставить в конце инструкции в C#?", o: [". (точка)", "; (точка с запятой)", ": (двоеточие)", ", (запятая)"], c: 1, openA: "" },
+            { stage: "", type: "closed", q: "2. Какой метод Unity вызывается один раз при запуске сцены?", o: ["Update()", "Awake()", "Start()", "FixedUpdate()"], c: 2, openA: "" },
+            { stage: "", type: "open", q: "3. Напишите команду для вывода сообщения \"Hello\" в консоль Unity.", o: [], c: -1, openA: "Debug.Log(\"Hello\");" },
+            { stage: "", type: "closed", q: "4. Что означает LTS в контексте версий Unity?", o: ["Light Transport System", "Long Term Support", "Local Test Server", "Low Thread Speed"], c: 1, openA: "" },
+            { stage: "", type: "open", q: "5. Какая среда разработки (IDE) устанавливается вместе с Unity по умолчанию? (одно слово)", o: [], c: -1, openA: "Visual Studio" },
+
+            // ЭТАП 2: Переменные и типы данных (6-10)
+            { stage: "📅 Этап 2: Переменные и типы данных", type: "closed", q: "6. Какой тип данных используется для целых чисел в C#?", o: ["float", "string", "int", "bool"], c: 2, openA: "" },
+            { stage: "", type: "open", q: "7. Напишите строку кода для объявления переменной типа int с именем score и значением 0.", o: [], c: -1, openA: "int score = 0;" },
+            { stage: "", type: "closed", q: "8. Чему равно значение по умолчанию для типа bool?", o: ["true", "false", "null", "0"], c: 1, openA: "" },
+            { stage: "", type: "open", q: "9. Какой суффикс обязателен при записи числа 3.14 как float? Напишите число с суффиксом.", o: [], c: -1, openA: "3.14f" },
+            { stage: "", type: "closed", q: "10. Какой стиль именования переменных принят в C#?", o: ["PascalCase", "camelCase", "snake_case", "kebab-case"], c: 1, openA: "" },
+
+            // ЭТАП 3: Условные конструкции (11-15)
+            { stage: "📅 Этап 3: Условные конструкции и логика", type: "closed", q: "11. Что выведет код: if (5 > 3) Debug.Log(\"Да\"); else Debug.Log(\"Нет\"); ?", o: ["Да", "Нет", "Ошибка", "Ничего"], c: 0, openA: "" },
+            { stage: "", type: "open", q: "12. Напишите оператор, который возвращает true только если ОБА условия истинны (логическое И).", o: [], c: -1, openA: "&&" },
+            { stage: "", type: "closed", q: "13. Для чего нужен оператор ! (НЕ)?", o: ["Сложение", "Инвертирование булева значения", "Сравнение", "Присваивание"], c: 1, openA: "" },
+            { stage: "", type: "closed", q: "14. Сколько блоков else можно использовать с одним if?", o: ["0", "1", "Сколько угодно", "2"], c: 1, openA: "" },
+            { stage: "", type: "open", q: "15. Напишите ключевое слово, которое завершает блок case в конструкции switch.", o: [], c: -1, openA: "break" },
+
+            // ЭТАП 4: Методы (16-20)
+            { stage: "📅 Этап 4: Методы, параметры, область видимости", type: "closed", q: "16. Что означает void в объявлении метода?", o: ["Метод возвращает int", "Метод не возвращает значение", "Метод статический", "Метод приватный"], c: 1, openA: "" },
+            { stage: "", type: "open", q: "17. Напишите ключевое слово, которое возвращает значение из метода.", o: [], c: -1, openA: "return" },
+            { stage: "", type: "closed", q: "18. Где доступна переменная, объявленная внутри метода?", o: ["Во всём проекте", "Только внутри этого метода", "Во всех методах класса", "Во всей сцене"], c: 1, openA: "" },
+            { stage: "", type: "open", q: "19. Как называется стиль именования методов в C# (каждое слово с заглавной буквы)?", o: [], c: -1, openA: "PascalCase" },
+            { stage: "", type: "closed", q: "20. Что такое аргумент метода?", o: ["Имя метода", "Значение, передаваемое при вызове", "Тип возврата", "Локальная переменная"], c: 1, openA: "" },
+
+            // ЭТАП 5: Массивы и циклы (21-25)
+            { stage: "📅 Этап 5: Массивы, списки и циклы", type: "closed", q: "21. С какого индекса начинается массив в C#?", o: ["1", "0", "-1", "Зависит от массива"], c: 1, openA: "" },
+            { stage: "", type: "open", q: "22. Напишите свойство (без скобок), которое возвращает длину массива arr.", o: [], c: -1, openA: "arr.Length" },
+            { stage: "", type: "closed", q: "23. Какая коллекция позволяет динамически менять размер?", o: ["Массив (Array)", "List<T>", "Строка (string)", "Структура (struct)"], c: 1, openA: "" },
+            { stage: "", type: "open", q: "24. Напишите название метода для добавления элемента в List<T>.", o: [], c: -1, openA: "Add" },
+            { stage: "", type: "closed", q: "25. Какая конструкция перебирает все элементы коллекции без использования индекса?", o: ["for", "while", "foreach", "switch"], c: 2, openA: "" },
+
+            // ЭТАП 6: Классы и компоненты (26-30)
+            { stage: "📅 Этап 6: Классы, компоненты, статические члены", type: "closed", q: "26. От какого класса должны наследоваться скрипты-компоненты в Unity?", o: ["GameObject", "MonoBehaviour", "ComponentBase", "UnityScript"], c: 1, openA: "" },
+            { stage: "", type: "open", q: "27. Напишите ключевое слово, которое делает поле или метод принадлежащим классу в целом, а не экземпляру.", o: [], c: -1, openA: "static" },
+            { stage: "", type: "closed", q: "28. Какой модификатор доступа делает поле видимым в инспекторе Unity?", o: ["private", "protected", "public", "internal"], c: 2, openA: "" },
+            { stage: "", type: "open", q: "29. Напишите название метода для получения компонента того же GameObject (без угловых скобок и параметров).", o: [], c: -1, openA: "GetComponent" },
+            { stage: "", type: "closed", q: "30. Что такое «магическое число» в контексте чистого кода?", o: ["Число 0", "Число без поясняющей переменной", "Максимальное int", "Случайное число"], c: 1, openA: "" }
         ];
 
         var perPage = 10;
@@ -1355,16 +1425,33 @@ void Update()
             var s = currentPage * perPage;
             var e = Math.min(s + perPage, testData.length);
             var h = '';
+            var currentStage = '';
             for (var i = s; i < e; i++) {
                 var item = testData[i];
-                h += '<div class="test-question" id="q' + i + '">';
-                h += '<div class="q">' + item.q + '</div>';
-                h += '<ul class="quiz-options">';
-                for (var j = 0; j < item.o.length; j++) {
-                    var letter = String.fromCharCode(65 + j);
-                    h += '<li onclick="checkAnswer(' + i + ',' + j + ')" id="opt-' + i + '-' + j + '">' + letter + ') ' + item.o[j] + '</li>';
+                // Заголовок этапа
+                if (item.stage && item.stage !== currentStage) {
+                    currentStage = item.stage;
+                    h += '<div class="stage-header">' + currentStage + '</div>';
                 }
-                h += '</ul>';
+                h += '<div class="test-question" id="q' + i + '">';
+                h += '<div class="q">' + item.q + ' <span style="font-size:0.75rem;color:#64748b;">(' + (item.type === 'open' ? '✏️ открытый' : '🔘 закрытый') + ')</span></div>';
+
+                if (item.type === 'closed') {
+                    // Закрытый вопрос
+                    h += '<ul class="quiz-options">';
+                    for (var j = 0; j < item.o.length; j++) {
+                        var letter = String.fromCharCode(65 + j);
+                        h += '<li onclick="checkClosed(' + i + ',' + j + ')" id="opt-' + i + '-' + j + '">' + letter + ') ' + item.o[j] + '</li>';
+                    }
+                    h += '</ul>';
+                } else {
+                    // Открытый вопрос
+                    h += '<div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">';
+                    h += '<input type="text" class="open-answer-input" id="open-' + i + '" placeholder="Введите ответ...">';
+                    h += '<button class="check-btn" id="check-btn-' + i + '" onclick="checkOpen(' + i + ')">Проверить</button>';
+                    h += '</div>';
+                }
+
                 h += '<div class="result-msg" id="msg-' + i + '"></div>';
                 h += '<button class="reset-btn" onclick="resetQuestion(' + i + ')">🔄 Попробовать снова</button>';
                 h += '</div>';
@@ -1372,7 +1459,8 @@ void Update()
             container.innerHTML = h;
         }
 
-        function checkAnswer(qi, oi) {
+        // Проверка закрытого вопроса
+        function checkClosed(qi, oi) {
             var item = testData[qi];
             var all = document.querySelectorAll('#q' + qi + ' .quiz-options li');
             var msg = document.getElementById('msg-' + qi);
@@ -1394,10 +1482,72 @@ void Update()
             }
         }
 
+        // Проверка открытого вопроса
+        function checkOpen(qi) {
+            var input = document.getElementById('open-' + qi);
+            var btn = document.getElementById('check-btn-' + qi);
+            var msg = document.getElementById('msg-' + qi);
+            var item = testData[qi];
+
+            if (!input || input.classList.contains('correct-input') || input.classList.contains('incorrect-input')) return;
+
+            var userAnswer = input.value.trim();
+            // Сравнение без учёта регистра и лишних пробелов
+            var correctAnswer = item.openA.trim();
+
+            // Для ответов с кодом — точное сравнение (регистр важен для C#)
+            // Для обычных слов — можно без учёта регистра
+            var isCodeAnswer = correctAnswer.includes('(') || correctAnswer.includes(';') || correctAnswer.includes('.');
+            var isCorrect;
+
+            if (isCodeAnswer) {
+                // Точное сравнение для кода
+                isCorrect = userAnswer === correctAnswer;
+            } else {
+                // Сравнение без учёта регистра для терминов
+                isCorrect = userAnswer.toLowerCase() === correctAnswer.toLowerCase();
+            }
+
+            // Альтернативные ответы
+            if (!isCorrect && correctAnswer === "Visual Studio") {
+                isCorrect = userAnswer.toLowerCase() === "visual studio" || userAnswer.toLowerCase() === "vs";
+            }
+            if (!isCorrect && correctAnswer === "Debug.Log(\"Hello\");") {
+                isCorrect = userAnswer === "Debug.Log(\"Hello\");" || userAnswer === "Debug.Log(\"Hello\")" || userAnswer === "Debug.Log(\"Hello\")";
+            }
+            if (!isCorrect && correctAnswer === "int score = 0;") {
+                isCorrect = userAnswer === "int score=0;" || userAnswer === "int score = 0";
+            }
+
+            if (isCorrect) {
+                input.classList.add('correct-input');
+                btn.disabled = true;
+                msg.textContent = '✅ Правильно!';
+                msg.className = 'result-msg green';
+            } else {
+                input.classList.add('incorrect-input');
+                btn.disabled = true;
+                msg.textContent = '❌ Неправильно. Правильный ответ: ' + item.openA;
+                msg.className = 'result-msg red';
+            }
+        }
+
+        // Сброс вопроса
         function resetQuestion(qi) {
-            var all = document.querySelectorAll('#q' + qi + ' .quiz-options li');
-            for (var k = 0; k < all.length; k++) {
-                all[k].classList.remove('answered', 'correct', 'incorrect');
+            var item = testData[qi];
+            if (item.type === 'closed') {
+                var all = document.querySelectorAll('#q' + qi + ' .quiz-options li');
+                for (var k = 0; k < all.length; k++) {
+                    all[k].classList.remove('answered', 'correct', 'incorrect');
+                }
+            } else {
+                var input = document.getElementById('open-' + qi);
+                var btn = document.getElementById('check-btn-' + qi);
+                if (input) {
+                    input.value = '';
+                    input.classList.remove('correct-input', 'incorrect-input');
+                }
+                if (btn) btn.disabled = false;
             }
             var msg = document.getElementById('msg-' + qi);
             if (msg) {
