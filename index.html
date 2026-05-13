@@ -374,6 +374,57 @@
                 padding: 1.2rem;
             }
         }
+		        /* Навигация между лекциями */
+        .lecture-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .lecture-nav .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.7rem 1.3rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .lecture-nav .nav-btn:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 20px var(--accent-glow);
+            transform: translateY(-2px);
+        }
+        .lecture-nav .nav-btn.prev {
+            margin-right: auto;
+        }
+        .lecture-nav .nav-btn.next {
+            margin-left: auto;
+        }
+        .lecture-nav .nav-btn.practice-link {
+            background: rgba(0, 230, 118, 0.1);
+            border-color: rgba(0, 230, 118, 0.3);
+            color: var(--green);
+        }
+        .lecture-nav .nav-btn.practice-link:hover {
+            background: var(--green);
+            color: #000;
+            border-color: var(--green);
+            box-shadow: 0 4px 20px rgba(0, 230, 118, 0.4);
+        }
     </style>
 </head>
 <body>
@@ -425,6 +476,13 @@
 {
     Debug.Log("Привет, мир!");
 }</code></pre>
+				                <div class="lecture-nav">
+                    <span></span>
+                    <span>
+                        <button class="nav-btn practice-link" onclick="showPage('practice')">📋 К заданиям</button>
+                        <button class="nav-btn next" onclick="showPage('lection2')">Лекция 2 →</button>
+                    </span>
+                </div>
             </div>
         </div>
         <!-- ===== ЛЕКЦИЯ 2 (полная) ===== -->
@@ -465,7 +523,14 @@ myNumber = 5; // Переменной myNumber присвоено значени
                     <li><strong><code>string</code> (String):</strong> Строчный тип данных, предназначенный для хранения текста — последовательности любых символов (букв, цифр, знаков). Текстовые литералы всегда должны быть заключены в двойные кавычки <code>""</code>. Значением по умолчанию для <code>string</code> является <code>null</code>, что означает отсутствие какого-либо значения. Это важная концепция: «отсутствие информации» в программировании — это тоже информация особого рода. Оператор <code>+</code> для строк выполняет функцию <strong>конкатенации</strong> (объединения). Если мы хотим объединить текст со значением переменной другого типа, компилятор автоматически преобразует это значение в его строковое представление. Чтобы внутри строки выполнить математическую операцию, а не просто вывести числа, это выражение необходимо заключить в скобки.</li>
                 </ul>
                 <p><strong>Неявная типизация (<code>var</code>):</strong> Ключевое слово <code>var</code> позволяет объявить переменную без явного указания типа, если ей сразу присваивается значение. Компилятор сам определит тип переменной по типу присваиваемого выражения. <code>var number = 5;</code> — переменная <code>number</code> станет типа <code>int</code>. <code>var text = "Hello";</code> — переменная <code>text</code> станет типа <code>string</code>. Переменная типа <code>var</code> не может быть объявлена без инициализации и не может быть полем класса. Её использование — это всего лишь синтаксический сахар для сокращения записи, реальный тип данных присваивается переменной один раз и не может быть изменен в дальнейшем.</p>
-            </div>
+                            <div class="lecture-nav">
+                    <span></span>
+                    <span>
+                        <button class="nav-btn practice-link" onclick="showPage('practice')">📋 К заданиям</button>
+                        <button class="nav-btn next" onclick="showPage('lection2')">Лекция 2 →</button>
+                    </span>
+                </div>
+			</div>
         </div>
 
         <!-- ===== ЛЕКЦИЯ 3 (полная) ===== -->
@@ -542,7 +607,14 @@ else
         break;
 }</code></pre>
                 <p><code>switch</code> поддерживает работу не только с целочисленными типами, но и со строками и некоторыми другими типами. Его использование делает код более структурированным и легко читаемым, когда логика программы зависит от конкретных фиксированных значений одной переменной.</p>
-            </div>
+                           <div class="lecture-nav">
+                    <button class="nav-btn prev" onclick="showPage('lection2')">← Лекция 2</button>
+                    <span>
+                        <button class="nav-btn practice-link" onclick="showPage('practice')">📋 К заданиям</button>
+                        <button class="nav-btn next" onclick="showPage('lection4')">Лекция 4 →</button>
+                    </span>
+                </div>
+					</div>
         </div>
 		        <!-- ===== ЛЕКЦИЯ 4 (полная) ===== -->
         <div class="page" id="page-lection4">
@@ -607,7 +679,14 @@ DealDamage(weaponDamage, enemyHealth); // Вызов метода с перед�
                 </ul>
                 <p>Между разными методами, а тем более между разными классами, локальные переменные «не видны» друг для друга. Единственный легальный способ передать данные из области видимости одного метода в другой — это передать их в качестве аргументов и получить результат через <code>return</code>.</p>
                 <p>Таким образом, каждый блок кода, ограниченный фигурными скобками, создает свой собственный изолированный контекст. Понимание этого правила позволяет правильно проектировать архитектуру программы и избегать соблазна делать все переменные глобальными (доступными отовсюду), что является плохой практикой, ведущей к хаосу в больших проектах. Эксперименты с созданием переменных в разных местах и намеренным вызовом ошибок компиляции — лучший способ укрепить это понимание.</p>
-            </div>
+                            <div class="lecture-nav">
+                    <button class="nav-btn prev" onclick="showPage('lection3')">← Лекция 3</button>
+                    <span>
+                        <button class="nav-btn practice-link" onclick="showPage('practice')">📋 К заданиям</button>
+                        <button class="nav-btn next" onclick="showPage('lection5')">Лекция 5 →</button>
+                    </span>
+                </div>
+			</div>
         </div>
 
         <!-- ===== ЛЕКЦИЯ 5 (полная) ===== -->
@@ -662,7 +741,14 @@ while (i < 5)
     Debug.Log(score);
 }</code></pre>
                 <p><code>foreach</code> делает код более компактным и защищает от ошибки выхода за границы массива, но не позволяет изменять значения элементов в перебираемой коллекции в этом же цикле.</p>
-            </div>
+                            <div class="lecture-nav">
+                    <button class="nav-btn prev" onclick="showPage('lection4')">← Лекция 4</button>
+                    <span>
+                        <button class="nav-btn practice-link" onclick="showPage('practice')">📋 К заданиям</button>
+                        <button class="nav-btn next" onclick="showPage('lection6')">Лекция 6 →</button>
+                    </span>
+                </div>
+				</div>
         </div>
 		        <!-- ===== ЛЕКЦИЯ 6 (полная) ===== -->
         <div class="page" id="page-lection6">
@@ -714,7 +800,14 @@ while (i < 5)
                     <li><strong>Делать видимость по умолчанию минимальной.</strong> Все поля, которые не должны быть доступны извне, должны быть объявлены как <code>private</code>.</li>
                     <li><strong>Не боятся рефакторинга.</strong> По мере разработки понимание задачи улучшается, и старый код можно и нужно улучшать, переименовывать, разбивать на более мелкие части, чтобы поддерживать его в чистоте.</li>
                 </ol>
-            </div>
+                            <div class="lecture-nav">
+                    <button class="nav-btn prev" onclick="showPage('lection5')">← Лекция 5</button>
+                    <span>
+                        <button class="nav-btn practice-link" onclick="showPage('practice')">📋 К заданиям</button>
+                        <button class="nav-btn next" onclick="showPage('tests')">✅ К тестам</button>
+                    </span>
+                </div>
+			</div>
         </div>
 
                 <!-- ===== ПРАКТИЧЕСКИЕ ЗАДАНИЯ ===== -->
