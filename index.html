@@ -717,11 +717,387 @@ while (i < 5)
             </div>
         </div>
 
-        <!-- ===== ПРАКТИЧЕСКИЕ ЗАДАНИЯ ===== -->
+                <!-- ===== ПРАКТИЧЕСКИЕ ЗАДАНИЯ ===== -->
         <div class="page" id="page-practice">
             <div class="card">
-                <h2>Практические задания <span class="badge badge-soon">Скоро</span></h2>
-                <p>Практические задания находятся в разработке и будут добавлены в ближайшее время. Здесь появятся упражнения по каждой лекции для закрепления навыков программирования на C# в Unity.</p>
+                <h2>Практические задания</h2>
+                <p>8 практических работ для закрепления материала по всем лекциям.</p>
+            </div>
+
+            <!-- Практика 1 -->
+            <div class="card" id="practice1">
+                <h3>Практика 1 (к лекции 1): «Первая программа — приветствие»</h3>
+                <p><strong>Цель:</strong> Закрепить понимание структуры скрипта, методов <code>Start</code> и <code>Update</code>, а также синтаксиса C#.</p>
+                <h4>Задание:</h4>
+                <ol>
+                    <li>Создай новый 3D-проект в Unity.</li>
+                    <li>Создай скрипт <code>HelloWorld</code> и прикрепи его к главной камере.</li>
+                    <li>В методе <code>Start</code> напиши код, который выводит в консоль фразу: <strong>"Игра запущена!"</strong>.</li>
+                    <li>В методе <code>Update</code> напиши код, который каждый кадр выводит в консоль фразу: <strong>"Кадр выполнен"</strong>.</li>
+                    <li>Запусти сцену и убедись, что первая фраза появляется один раз, а вторая — бесконечно много раз.</li>
+                </ol>
+                <p><strong>Проверка:</strong> В окне Console (<code>Ctrl+Shift+C</code>) должны быть соответствующие сообщения.</p>
+                <pre><code>void Start()
+{
+    Debug.Log("Игра запущена!");
+}
+
+void Update()
+{
+    Debug.Log("Кадр выполнен");
+}</code></pre>
+            </div>
+
+            <!-- Практика 2 -->
+            <div class="card" id="practice2">
+                <h3>Практика 2 (к лекции 2): «Калькулятор здоровья персонажа»</h3>
+                <p><strong>Цель:</strong> Научиться объявлять переменные разных типов, использовать арифметические операции и составные операторы.</p>
+                <h4>Задание:</h4>
+                <ol>
+                    <li>Создай скрипт <code>PlayerHealth</code> и прикрепи его к камере или пустому объекту.</li>
+                    <li>Объяви переменные:</li>
+                </ol>
+                <ul>
+                    <li><code>int maxHealth</code> (присвой 100)</li>
+                    <li><code>int currentHealth</code> (присвой 100)</li>
+                    <li><code>float damageMultiplier</code> (присвой 1.5f)</li>
+                    <li><code>string playerName</code> (присвой своё имя)</li>
+                </ul>
+                <ol start="3">
+                    <li>В методе <code>Start</code> выполни следующие действия:</li>
+                </ol>
+                <ul>
+                    <li>Выведи в консоль: <strong>"Игрок: [имя]"</strong>.</li>
+                    <li>Вычти из <code>currentHealth</code> число 15 (используя составной оператор <code>-=</code>).</li>
+                    <li>Умножь <code>damageMultiplier</code> на 2 (используя <code>*=</code>).</li>
+                    <li>Выведи в консоль: <strong>"Здоровье после урона: X"</strong>, <strong>"Множитель урона: Y"</strong>.</li>
+                </ul>
+                <ol start="4">
+                    <li>Объяви переменную <code>isDead</code> типа <code>bool</code> и присвой ей результат проверки: <code>currentHealth <= 0</code>. Выведи её значение в консоль.</li>
+                </ol>
+                <p><strong>Проверка:</strong> В консоли должны быть корректные числа (100 → 85, 1.5 → 3).</p>
+                <pre><code>int maxHealth = 100;
+int currentHealth = 100;
+float damageMultiplier = 1.5f;
+string playerName = "ТвоёИмя";
+bool isDead;
+
+void Start()
+{
+    Debug.Log("Игрок: " + playerName);
+    currentHealth -= 15;
+    damageMultiplier *= 2;
+    Debug.Log("Здоровье после урона: " + currentHealth);
+    Debug.Log("Множитель урона: " + damageMultiplier);
+    isDead = currentHealth <= 0;
+    Debug.Log("Персонаж мёртв? " + isDead);
+}</code></pre>
+            </div>
+
+            <!-- Практика 3 -->
+            <div class="card" id="practice3">
+                <h3>Практика 3 (к лекции 3): «Система оценки очков»</h3>
+                <p><strong>Цель:</strong> Применить условные конструкции <code>if</code>, <code>else if</code>, <code>else</code> и логические операторы.</p>
+                <h4>Задание:</h4>
+                <ol>
+                    <li>Создай скрипт <code>ScoreRating</code>.</li>
+                    <li>Объяви переменную <code>int playerScore</code> и присвой ей любое число от 0 до 150.</li>
+                    <li>В методе <code>Start</code> напиши цепочку условий, которая выводит в консоль:</li>
+                </ol>
+                <ul>
+                    <li><strong>"Божественно!"</strong> если <code>score >= 100</code></li>
+                    <li><strong>"Отлично!"</strong> если <code>score >= 70</code> и <code>< 100</code></li>
+                    <li><strong>"Хорошо"</strong> если <code>score >= 50</code> и <code>< 70</code></li>
+                    <li><strong>"Нужно подтянуть"</strong> если <code>score < 50</code></li>
+                </ul>
+                <ol start="4">
+                    <li>Добавь проверку: если <code>score == 100</code> И одновременно <code>playerScore >= 100</code>, выведи дополнительно <strong>"Идеальный забег!"</strong>.</li>
+                    <li>Измени <code>playerScore</code> и запусти программу несколько раз, чтобы проверить разные ветки.</li>
+                </ol>
+                <p><strong>Проверка:</strong> Для <code>score = 100</code> выводятся две фразы. Для <code>score = 30</code> — только одна.</p>
+                <pre><code>int playerScore = 100;
+
+void Start()
+{
+    if (playerScore >= 100)
+    {
+        Debug.Log("Божественно!");
+    }
+    else if (playerScore >= 70)
+    {
+        Debug.Log("Отлично!");
+    }
+    else if (playerScore >= 50)
+    {
+        Debug.Log("Хорошо");
+    }
+    else
+    {
+        Debug.Log("Нужно подтянуть");
+    }
+
+    if (playerScore == 100 && playerScore >= 100)
+    {
+        Debug.Log("Идеальный забег!");
+    }
+}</code></pre>
+            </div>
+
+            <!-- Практика 4 -->
+            <div class="card" id="practice4">
+                <h3>Практика 4 (к лекции 3): «Меню выбора оружия через switch»</h3>
+                <p><strong>Цель:</strong> Научиться использовать конструкцию <code>switch</code>.</p>
+                <h4>Задание:</h4>
+                <ol>
+                    <li>Создай скрипт <code>WeaponSwitch</code>.</li>
+                    <li>Объяви переменную <code>string weaponType</code> и присвой ей одно из значений: <code>"sword"</code>, <code>"bow"</code>, <code>"staff"</code> или <code>"dagger"</code>.</li>
+                    <li>В методе <code>Start</code> напиши конструкцию <code>switch</code>, которая выводит в консоль:</li>
+                </ol>
+                <ul>
+                    <li>Для <code>"sword"</code>: <strong>"Наносит 20 урона в ближнем бою"</strong></li>
+                    <li>Для <code>"bow"</code>: <strong>"Стреляет стрелами на 50 метров"</strong></li>
+                    <li>Для <code>"staff"</code>: <strong>"Восстанавливает 10 маны в секунду"</strong></li>
+                    <li>Для <code>default</code>: <strong>"Неизвестное оружие"</strong></li>
+                </ul>
+                <ol start="4">
+                    <li>Добавь блок <code>default</code>, который также пишет в консоль <strong>"Используем кулаки"</strong>.</li>
+                    <li>Проверь работу программы со всеми значениями.</li>
+                </ol>
+                <p><strong>Проверка:</strong> При <code>weaponType = "sword"</code> выводится только одна соответствующая строка.</p>
+                <pre><code>string weaponType = "sword";
+
+void Start()
+{
+    switch (weaponType)
+    {
+        case "sword":
+            Debug.Log("Наносит 20 урона в ближнем бою");
+            break;
+        case "bow":
+            Debug.Log("Стреляет стрелами на 50 метров");
+            break;
+        case "staff":
+            Debug.Log("Восстанавливает 10 маны в секунду");
+            break;
+        default:
+            Debug.Log("Неизвестное оружие");
+            Debug.Log("Используем кулаки");
+            break;
+    }
+}</code></pre>
+            </div>
+
+            <!-- Практика 5 -->
+            <div class="card" id="practice5">
+                <h3>Практика 5 (к лекции 4): «Создатель приветствий»</h3>
+                <p><strong>Цель:</strong> Освоить объявление методов, параметры, возврат значений и области видимости.</p>
+                <h4>Задание:</h4>
+                <ol>
+                    <li>Создай скрипт <code>GreetingMaker</code>.</li>
+                    <li>Напиши метод <code>void SayHello(string name)</code>, который выводит в консоль <strong>"Привет, [name]!"</strong>.</li>
+                    <li>Напиши метод <code>int DoubleNumber(int number)</code>, который принимает число и возвращает его умноженным на 2.</li>
+                    <li>Напиши метод <code>bool IsAdult(int age)</code>, который возвращает <code>true</code>, если возраст <code>>= 18</code>, иначе <code>false</code>.</li>
+                    <li>В методе <code>Start</code>:</li>
+                </ol>
+                <ul>
+                    <li>Вызови <code>SayHello</code> со своим именем.</li>
+                    <li>Объяви переменную <code>int result = DoubleNumber(7);</code> и выведи её в консоль.</li>
+                    <li>С помощью <code>IsAdult</code> проверь возраст 16 и 20, выведи результат как <strong>"Совершеннолетний? True/False"</strong>.</li>
+                </ul>
+                <p><strong>Проверка:</strong> В консоли должно быть 4 строки: приветствие, число 14, два булевых значения.</p>
+                <pre><code>void SayHello(string name)
+{
+    Debug.Log("Привет, " + name + "!");
+}
+
+int DoubleNumber(int number)
+{
+    return number * 2;
+}
+
+bool IsAdult(int age)
+{
+    return age >= 18;
+}
+
+void Start()
+{
+    SayHello("ТвоёИмя");
+    int result = DoubleNumber(7);
+    Debug.Log("Удвоенное число: " + result);
+    Debug.Log("Совершеннолетний? " + IsAdult(16));
+    Debug.Log("Совершеннолетний? " + IsAdult(20));
+}</code></pre>
+            </div>
+
+            <!-- Практика 6 -->
+            <div class="card" id="practice6">
+                <h3>Практика 6 (к лекции 5): «Список победителей»</h3>
+                <p><strong>Цель:</strong> Научиться работать со статическими массивами, <code>List&lt;T&gt;</code> и циклами.</p>
+                <h4>Задание:</h4>
+                <ol>
+                    <li>Создай скрипт <code>WinnerList</code>.</li>
+                    <li>Объяви массив <code>string[] winners</code> с 3 именами победителей.</li>
+                    <li>Объяви <code>List&lt;int&gt; scores</code> и добавь в него вручную 5 чисел (очки).</li>
+                    <li>В методе <code>Start</code>:</li>
+                </ol>
+                <ul>
+                    <li>Выведи всех победителей из массива через цикл <code>for</code>.</li>
+                    <li>Выведи все очки из списка через цикл <code>foreach</code>.</li>
+                    <li>Добавь в список <code>scores</code> новое число (например, 999) с помощью <code>.Add()</code>.</li>
+                    <li>Удали из списка первое число с помощью <code>.RemoveAt(0)</code>.</li>
+                    <li>Выведи обновлённый список через <code>for</code>.</li>
+                </ul>
+                <ol start="5">
+                    <li>Выведи в консоль: <strong>"Количество победителей: X"</strong>, <strong>"Количество очков после изменений: Y"</strong>, используя <code>.Length</code> и <code>.Count</code>.</li>
+                </ol>
+                <p><strong>Проверка:</strong> Количество элементов в списке должно уменьшиться на 1 после удаления.</p>
+                <pre><code>using System.Collections.Generic;
+
+string[] winners = { "Игрок1", "Игрок2", "Игрок3" };
+List&lt;int&gt; scores = new List&lt;int&gt;() { 10, 25, 40, 5, 100 };
+
+void Start()
+{
+    Debug.Log("=== Победители ===");
+    for (int i = 0; i < winners.Length; i++)
+    {
+        Debug.Log(winners[i]);
+    }
+
+    Debug.Log("=== Очки ===");
+    foreach (int score in scores)
+    {
+        Debug.Log(score);
+    }
+
+    scores.Add(999);
+    scores.RemoveAt(0);
+
+    Debug.Log("=== Обновлённый список очков ===");
+    for (int i = 0; i < scores.Count; i++)
+    {
+        Debug.Log(scores[i]);
+    }
+
+    Debug.Log("Количество победителей: " + winners.Length);
+    Debug.Log("Количество очков после изменений: " + scores.Count);
+}</code></pre>
+            </div>
+
+            <!-- Практика 7 -->
+            <div class="card" id="practice7">
+                <h3>Практика 7 (к лекции 5): «Сумматор и поиск максимума»</h3>
+                <p><strong>Цель:</strong> Закрепить циклы и работу с коллекциями.</p>
+                <h4>Задание:</h4>
+                <ol>
+                    <li>Создай скрипт <code>ArrayCalculator</code>.</li>
+                    <li>Объяви массив <code>int[] numbers = { 12, 45, 7, 89, 34, 67, 23 }</code>.</li>
+                    <li>Напиши метод <code>int FindSum(int[] arr)</code>, который возвращает сумму всех элементов.</li>
+                    <li>Напиши метод <code>int FindMax(int[] arr)</code>, который возвращает максимальное значение.</li>
+                    <li>Напиши метод <code>int FindMin(int[] arr)</code>, который возвращает минимальное значение.</li>
+                    <li>В методе <code>Start</code> вызови все три метода и выведи их результаты в консоль.</li>
+                </ol>
+                <p><strong>Проверка:</strong> Сумма = 277, максимум = 89, минимум = 7.</p>
+                <pre><code>int[] numbers = { 12, 45, 7, 89, 34, 67, 23 };
+
+int FindSum(int[] arr)
+{
+    int sum = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        sum += arr[i];
+    }
+    return sum;
+}
+
+int FindMax(int[] arr)
+{
+    int max = arr[0];
+    for (int i = 1; i < arr.Length; i++)
+    {
+        if (arr[i] > max) max = arr[i];
+    }
+    return max;
+}
+
+int FindMin(int[] arr)
+{
+    int min = arr[0];
+    for (int i = 1; i < arr.Length; i++)
+    {
+        if (arr[i] < min) min = arr[i];
+    }
+    return min;
+}
+
+void Start()
+{
+    Debug.Log("Сумма: " + FindSum(numbers));
+    Debug.Log("Максимум: " + FindMax(numbers));
+    Debug.Log("Минимум: " + FindMin(numbers));
+}</code></pre>
+            </div>
+
+            <!-- Практика 8 -->
+            <div class="card" id="practice8">
+                <h3>Практика 8 (к лекции 6): «Счётчик врагов»</h3>
+                <p><strong>Цель:</strong> Понять разницу между обычными и статическими полями, а также научиться получать компоненты.</p>
+                <h4>Задание:</h4>
+                <ol>
+                    <li>Создай два скрипта: <code>Enemy</code> и <code>EnemyCounter</code>.</li>
+                    <li>В скрипте <code>Enemy</code>:</li>
+                </ol>
+                <ul>
+                    <li>Объяви <code>public static int totalEnemies = 0</code>.</li>
+                    <li>В методе <code>Start</code> увеличь <code>totalEnemies</code> на 1.</li>
+                    <li>В методе <code>OnDestroy</code> (вызывается при удалении объекта) уменьши <code>totalEnemies</code> на 1.</li>
+                    <li>Объяви <code>public int health = 50</code>.</li>
+                    <li>Добавь метод <code>public void TakeDamage(int damage)</code>, который уменьшает здоровье и выводит в консоль <strong>"У врага осталось X здоровья"</strong>. Если здоровье <code><= 0</code> — уничтожь объект командой <code>Destroy(gameObject)</code>.</li>
+                </ul>
+                <ol start="3">
+                    <li>В скрипте <code>EnemyCounter</code>:</li>
+                </ol>
+                <ul>
+                    <li>В методе <code>Update</code> выводи в консоль текущее значение <code>Enemy.totalEnemies</code> (но не каждый кадр — используй <code>if (Input.GetKeyDown(KeyCode.Space))</code>).</li>
+                </ul>
+                <ol start="4">
+                    <li>Создай на сцене 3 объекта, на каждый повесь скрипт <code>Enemy</code>. На четвёртый объект повесь <code>EnemyCounter</code>.</li>
+                    <li>При нажатии пробела в консоли должно появляться число живых врагов. При уничтожении врага (например, вызвав <code>TakeDamage</code> из другого скрипта или через инспектор) — счётчик уменьшается.</li>
+                </ol>
+                <p><strong>Проверка:</strong> При старте — 3 врага. После уничтожения одного — 2.</p>
+                <pre><code>// Скрипт Enemy.cs
+public static int totalEnemies = 0;
+public int health = 50;
+
+void Start()
+{
+    totalEnemies++;
+}
+
+void OnDestroy()
+{
+    totalEnemies--;
+}
+
+public void TakeDamage(int damage)
+{
+    health -= damage;
+    Debug.Log("У врага осталось " + health + " здоровья");
+    if (health <= 0)
+    {
+        Destroy(gameObject);
+    }
+}
+
+// Скрипт EnemyCounter.cs
+void Update()
+{
+    if (Input.GetKeyDown(KeyCode.Space))
+    {
+        Debug.Log("Живых врагов: " + Enemy.totalEnemies);
+    }
+}</code></pre>
             </div>
         </div>
 
