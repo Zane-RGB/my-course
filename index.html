@@ -564,6 +564,14 @@
             background: rgba(108, 92, 231, 0.2);
             color: #fff;
         }
+		.matching-table { width: 100%; border-collapse: collapse; margin: 0.6rem 0; }
+        .matching-table td { padding: 0.55rem 0.8rem; border: 1px solid var(--border); vertical-align: middle; font-size: 0.9rem; }
+        .matching-table td:first-child { width: 40%; font-weight: 600; color: #e2e8f0; }
+        .matching-table select { background: var(--surface); border: 2px solid var(--border); color: #fff; padding: 0.4rem 0.6rem; border-radius: 6px; font-size: 0.85rem; width: 100%; cursor: pointer; outline: none; }
+        .matching-table select:focus { border-color: var(--accent); }
+        .matching-table select.correct-match { border-color: var(--green) !important; background: rgba(0,230,118,0.1) !important; }
+        .matching-table select.incorrect-match { border-color: var(--red) !important; background: rgba(255,82,87,0.1) !important; }
+        .matching-hint { font-size: 0.78rem; color: #ffab40; margin-bottom: 0.3rem; }
     </style>
 </head>
 <body>
@@ -1004,387 +1012,331 @@ while (i < 5)
 			</div>
         </div>
 
-                <!-- ===== ПРАКТИЧЕСКИЕ ЗАДАНИЯ ===== -->
+        <!-- ===== ПРАКТИЧЕСКИЕ ЗАДАНИЯ ===== -->
         <div class="page" id="page-practice">
             <div class="card">
                 <h2>Практические задания</h2>
-                <p>8 практических работ для закрепления материала по всем лекциям.</p>
+                <p>8 практических работ с подробными пошаговыми инструкциями (20-25 пунктов каждая).</p>
             </div>
 
             <!-- Практика 1 -->
             <div class="card" id="practice1">
-                <h3>Практика 1 (к лекции 1): «Первая программа — приветствие»</h3>
-                <p><strong>Цель:</strong> Закрепить понимание структуры скрипта, методов <code>Start</code> и <code>Update</code>, а также синтаксиса C#.</p>
-                <h4>Задание:</h4>
+                <h3>Практика 1: «Первая программа — приветствие»</h3>
+                <p><strong>Цель:</strong> Закрепить структуру скрипта, методы <code>Start</code> и <code>Update</code>, синтаксис C#.</p>
+                <h4>Пошаговый план:</h4>
                 <ol>
-                    <li>Создай новый 3D-проект в Unity.</li>
-                    <li>Создай скрипт <code>HelloWorld</code> и прикрепи его к главной камере.</li>
-                    <li>В методе <code>Start</code> напиши код, который выводит в консоль фразу: <strong>"Игра запущена!"</strong>.</li>
-                    <li>В методе <code>Update</code> напиши код, который каждый кадр выводит в консоль фразу: <strong>"Кадр выполнен"</strong>.</li>
-                    <li>Запусти сцену и убедись, что первая фраза появляется один раз, а вторая — бесконечно много раз.</li>
+                    <li>Запустите Unity Hub.</li>
+                    <li>Нажмите кнопку <strong>New Project</strong>.</li>
+                    <li>Выберите шаблон <strong>3D Core</strong>.</li>
+                    <li>Введите имя проекта: <code>HelloWorldProject</code>.</li>
+                    <li>Выберите папку для сохранения проекта.</li>
+                    <li>Нажмите <strong>Create</strong> и дождитесь загрузки редактора.</li>
+                    <li>В окне <strong>Hierarchy</strong> найдите объект <strong>Main Camera</strong>.</li>
+                    <li>Выделите Main Camera одним кликом.</li>
+                    <li>В окне <strong>Inspector</strong> нажмите кнопку <strong>Add Component</strong>.</li>
+                    <li>В строке поиска введите: <code>HelloWorld</code>.</li>
+                    <li>Нажмите <strong>New Script</strong> и затем <strong>Create and Add</strong>.</li>
+                    <li>В папке <strong>Assets</strong> появится файл <code>HelloWorld.cs</code>.</li>
+                    <li>Дважды кликните по файлу — откроется Visual Studio.</li>
+                    <li>Найдите метод <code>Start()</code> внутри класса.</li>
+                    <li>Внутри фигурных скобок метода напишите: <code>Debug.Log("Игра запущена!");</code></li>
+                    <li>Найдите метод <code>Update()</code>.</li>
+                    <li>Внутри его скобок напишите: <code>Debug.Log("Кадр выполнен");</code></li>
+                    <li>Сохраните файл (Ctrl+S).</li>
+                    <li>Вернитесь в редактор Unity.</li>
+                    <li>Откройте окно <strong>Console</strong> (Window → General → Console).</li>
+                    <li>Нажмите кнопку <strong>Play</strong> вверху редактора.</li>
+                    <li>Наблюдайте: первое сообщение появилось один раз.</li>
+                    <li>Наблюдайте: второе сообщение появляется бесконечно.</li>
+                    <li>Нажмите <strong>Play</strong> ещё раз, чтобы остановить.</li>
+                    <li>Закройте проект: File → Exit.</li>
                 </ol>
-                <p><strong>Проверка:</strong> В окне Console (<code>Ctrl+Shift+C</code>) должны быть соответствующие сообщения.</p>
-                <pre><code>void Start()
-{
-    Debug.Log("Игра запущена!");
-}
-
-void Update()
-{
-    Debug.Log("Кадр выполнен");
-}</code></pre>
+                <pre><code>void Start() { Debug.Log("Игра запущена!"); }
+void Update() { Debug.Log("Кадр выполнен"); }</code></pre>
             </div>
 
             <!-- Практика 2 -->
             <div class="card" id="practice2">
-                <h3>Практика 2 (к лекции 2): «Калькулятор здоровья персонажа»</h3>
-                <p><strong>Цель:</strong> Научиться объявлять переменные разных типов, использовать арифметические операции и составные операторы.</p>
-                <h4>Задание:</h4>
+                <h3>Практика 2: «Калькулятор здоровья персонажа»</h3>
+                <p><strong>Цель:</strong> Научиться объявлять переменные разных типов, использовать арифметические и составные операторы.</p>
+                <h4>Пошаговый план:</h4>
                 <ol>
-                    <li>Создай скрипт <code>PlayerHealth</code> и прикрепи его к камере или пустому объекту.</li>
-                    <li>Объяви переменные:</li>
+                    <li>Создайте новый 3D-проект в Unity: <code>HealthCalculator</code>.</li>
+                    <li>В Hierarchy создайте пустой объект: ПКМ → Create Empty.</li>
+                    <li>Назовите его <code>Player</code>.</li>
+                    <li>Выделите Player и в Inspector нажмите Add Component.</li>
+                    <li>Создайте скрипт с именем <code>PlayerHealth</code>.</li>
+                    <li>Откройте скрипт в Visual Studio.</li>
+                    <li>Внутри класса, перед методом Start, объявите переменную: <code>int maxHealth = 100;</code></li>
+                    <li>Ниже объявите: <code>int currentHealth = 100;</code></li>
+                    <li>Ниже объявите: <code>float damageMultiplier = 1.5f;</code></li>
+                    <li>Ниже объявите: <code>string playerName = "ТвоёИмя";</code></li>
+                    <li>Ниже объявите: <code>bool isDead;</code></li>
+                    <li>В методе Start выведите имя игрока: <code>Debug.Log("Игрок: " + playerName);</code></li>
+                    <li>Вычтите 15 из здоровья: <code>currentHealth -= 15;</code></li>
+                    <li>Умножьте множитель на 2: <code>damageMultiplier *= 2;</code></li>
+                    <li>Выведите здоровье: <code>Debug.Log("Здоровье после урона: " + currentHealth);</code></li>
+                    <li>Выведите множитель: <code>Debug.Log("Множитель урона: " + damageMultiplier);</code></li>
+                    <li>Присвойте isDead результат проверки: <code>isDead = currentHealth <= 0;</code></li>
+                    <li>Выведите состояние: <code>Debug.Log("Персонаж мёртв? " + isDead);</code></li>
+                    <li>Сохраните скрипт и вернитесь в Unity.</li>
+                    <li>Откройте окно Console.</li>
+                    <li>Нажмите Play.</li>
+                    <li>Проверьте вывод: здоровье 85, множитель 3, isDead = False.</li>
+                    <li>Остановите Play.</li>
+                    <li>Измените currentHealth на 0 в коде и перезапустите — проверьте isDead.</li>
+                    <li>Убедитесь, что теперь isDead = True.</li>
                 </ol>
-                <ul>
-                    <li><code>int maxHealth</code> (присвой 100)</li>
-                    <li><code>int currentHealth</code> (присвой 100)</li>
-                    <li><code>float damageMultiplier</code> (присвой 1.5f)</li>
-                    <li><code>string playerName</code> (присвой своё имя)</li>
-                </ul>
-                <ol start="3">
-                    <li>В методе <code>Start</code> выполни следующие действия:</li>
-                </ol>
-                <ul>
-                    <li>Выведи в консоль: <strong>"Игрок: [имя]"</strong>.</li>
-                    <li>Вычти из <code>currentHealth</code> число 15 (используя составной оператор <code>-=</code>).</li>
-                    <li>Умножь <code>damageMultiplier</code> на 2 (используя <code>*=</code>).</li>
-                    <li>Выведи в консоль: <strong>"Здоровье после урона: X"</strong>, <strong>"Множитель урона: Y"</strong>.</li>
-                </ul>
-                <ol start="4">
-                    <li>Объяви переменную <code>isDead</code> типа <code>bool</code> и присвой ей результат проверки: <code>currentHealth <= 0</code>. Выведи её значение в консоль.</li>
-                </ol>
-                <p><strong>Проверка:</strong> В консоли должны быть корректные числа (100 → 85, 1.5 → 3).</p>
-                <pre><code>int maxHealth = 100;
-int currentHealth = 100;
+                <pre><code>int maxHealth = 100, currentHealth = 100;
 float damageMultiplier = 1.5f;
-string playerName = "ТвоёИмя";
+string playerName = "Игрок";
 bool isDead;
-
-void Start()
-{
+void Start() {
     Debug.Log("Игрок: " + playerName);
-    currentHealth -= 15;
-    damageMultiplier *= 2;
-    Debug.Log("Здоровье после урона: " + currentHealth);
-    Debug.Log("Множитель урона: " + damageMultiplier);
+    currentHealth -= 15; damageMultiplier *= 2;
+    Debug.Log("Здоровье: " + currentHealth);
+    Debug.Log("Множитель: " + damageMultiplier);
     isDead = currentHealth <= 0;
-    Debug.Log("Персонаж мёртв? " + isDead);
+    Debug.Log("Мёртв? " + isDead);
 }</code></pre>
             </div>
 
             <!-- Практика 3 -->
             <div class="card" id="practice3">
-                <h3>Практика 3 (к лекции 3): «Система оценки очков»</h3>
+                <h3>Практика 3: «Система оценки очков»</h3>
                 <p><strong>Цель:</strong> Применить условные конструкции <code>if</code>, <code>else if</code>, <code>else</code> и логические операторы.</p>
-                <h4>Задание:</h4>
+                <h4>Пошаговый план:</h4>
                 <ol>
-                    <li>Создай скрипт <code>ScoreRating</code>.</li>
-                    <li>Объяви переменную <code>int playerScore</code> и присвой ей любое число от 0 до 150.</li>
-                    <li>В методе <code>Start</code> напиши цепочку условий, которая выводит в консоль:</li>
+                    <li>Создайте новый проект: <code>ScoreSystem</code>.</li>
+                    <li>Создайте пустой объект <code>GameManager</code>.</li>
+                    <li>Добавьте к нему скрипт <code>ScoreRating</code>.</li>
+                    <li>Откройте скрипт в Visual Studio.</li>
+                    <li>Объявите переменную: <code>int playerScore = 100;</code></li>
+                    <li>В Start напишите: <code>if (playerScore >= 100) { ... }</code></li>
+                    <li>Внутри фигурных скобок: <code>Debug.Log("Божественно!");</code></li>
+                    <li>Добавьте: <code>else if (playerScore >= 70) { Debug.Log("Отлично!"); }</code></li>
+                    <li>Добавьте: <code>else if (playerScore >= 50) { Debug.Log("Хорошо"); }</code></li>
+                    <li>Добавьте: <code>else { Debug.Log("Нужно подтянуть"); }</code></li>
+                    <li>Добавьте отдельную проверку: <code>if (playerScore == 100 && playerScore >= 100)</code></li>
+                    <li>Внутри выведите: <code>Debug.Log("Идеальный забег!");</code></li>
+                    <li>Сохраните и запустите сцену.</li>
+                    <li>Проверьте: при score=100 выводятся две фразы.</li>
+                    <li>Остановите, измените score на 85.</li>
+                    <li>Запустите — должна быть только "Отлично!".</li>
+                    <li>Проверьте score=60 → "Хорошо".</li>
+                    <li>Проверьте score=30 → "Нужно подтянуть".</li>
+                    <li>Проверьте score=150 → "Божественно!" + "Идеальный забег!".</li>
+                    <li>Проверьте score=99 → "Отлично!" (без второй фразы).</li>
+                    <li>Убедитесь, что условия работают независимо.</li>
                 </ol>
-                <ul>
-                    <li><strong>"Божественно!"</strong> если <code>score >= 100</code></li>
-                    <li><strong>"Отлично!"</strong> если <code>score >= 70</code> и <code>< 100</code></li>
-                    <li><strong>"Хорошо"</strong> если <code>score >= 50</code> и <code>< 70</code></li>
-                    <li><strong>"Нужно подтянуть"</strong> если <code>score < 50</code></li>
-                </ul>
-                <ol start="4">
-                    <li>Добавь проверку: если <code>score == 100</code> И одновременно <code>playerScore >= 100</code>, выведи дополнительно <strong>"Идеальный забег!"</strong>.</li>
-                    <li>Измени <code>playerScore</code> и запусти программу несколько раз, чтобы проверить разные ветки.</li>
-                </ol>
-                <p><strong>Проверка:</strong> Для <code>score = 100</code> выводятся две фразы. Для <code>score = 30</code> — только одна.</p>
                 <pre><code>int playerScore = 100;
-
-void Start()
-{
-    if (playerScore >= 100)
-    {
-        Debug.Log("Божественно!");
-    }
-    else if (playerScore >= 70)
-    {
-        Debug.Log("Отлично!");
-    }
-    else if (playerScore >= 50)
-    {
-        Debug.Log("Хорошо");
-    }
-    else
-    {
-        Debug.Log("Нужно подтянуть");
-    }
-
-    if (playerScore == 100 && playerScore >= 100)
-    {
-        Debug.Log("Идеальный забег!");
-    }
+void Start() {
+    if (playerScore >= 100) Debug.Log("Божественно!");
+    else if (playerScore >= 70) Debug.Log("Отлично!");
+    else if (playerScore >= 50) Debug.Log("Хорошо");
+    else Debug.Log("Нужно подтянуть");
+    if (playerScore == 100 && playerScore >= 100) Debug.Log("Идеальный забег!");
 }</code></pre>
             </div>
 
             <!-- Практика 4 -->
             <div class="card" id="practice4">
-                <h3>Практика 4 (к лекции 3): «Меню выбора оружия через switch»</h3>
+                <h3>Практика 4: «Меню выбора оружия через switch»</h3>
                 <p><strong>Цель:</strong> Научиться использовать конструкцию <code>switch</code>.</p>
-                <h4>Задание:</h4>
+                <h4>Пошаговый план:</h4>
                 <ol>
-                    <li>Создай скрипт <code>WeaponSwitch</code>.</li>
-                    <li>Объяви переменную <code>string weaponType</code> и присвой ей одно из значений: <code>"sword"</code>, <code>"bow"</code>, <code>"staff"</code> или <code>"dagger"</code>.</li>
-                    <li>В методе <code>Start</code> напиши конструкцию <code>switch</code>, которая выводит в консоль:</li>
+                    <li>Создайте новый проект: <code>WeaponMenu</code>.</li>
+                    <li>Создайте пустой объект <code>WeaponController</code>.</li>
+                    <li>Добавьте скрипт <code>WeaponSwitch</code>.</li>
+                    <li>Откройте скрипт в редакторе.</li>
+                    <li>Объявите: <code>string weaponType = "sword";</code></li>
+                    <li>В Start напишите: <code>switch (weaponType) { }</code></li>
+                    <li>Добавьте case: <code>case "sword":</code></li>
+                    <li>Внутри: <code>Debug.Log("Наносит 20 урона в ближнем бою");</code></li>
+                    <li>Добавьте: <code>break;</code></li>
+                    <li>Добавьте: <code>case "bow": Debug.Log("Стреляет стрелами на 50 метров"); break;</code></li>
+                    <li>Добавьте: <code>case "staff": Debug.Log("Восстанавливает 10 маны в секунду"); break;</code></li>
+                    <li>Добавьте: <code>case "dagger": Debug.Log("Быстрая атака с ядом"); break;</code></li>
+                    <li>Добавьте: <code>default: Debug.Log("Неизвестное оружие");</code></li>
+                    <li>В default добавьте: <code>Debug.Log("Используем кулаки"); break;</code></li>
+                    <li>Сохраните и запустите с weaponType="sword".</li>
+                    <li>Проверьте вывод: только одна строка про меч.</li>
+                    <li>Поменяйте на "bow" — проверьте.</li>
+                    <li>Поменяйте на "staff" — проверьте.</li>
+                    <li>Поменяйте на "dagger" — проверьте.</li>
+                    <li>Поменяйте на "axe" — проверьте default.</li>
+                    <li>Убедитесь, что в default выводятся две строки.</li>
                 </ol>
-                <ul>
-                    <li>Для <code>"sword"</code>: <strong>"Наносит 20 урона в ближнем бою"</strong></li>
-                    <li>Для <code>"bow"</code>: <strong>"Стреляет стрелами на 50 метров"</strong></li>
-                    <li>Для <code>"staff"</code>: <strong>"Восстанавливает 10 маны в секунду"</strong></li>
-                    <li>Для <code>default</code>: <strong>"Неизвестное оружие"</strong></li>
-                </ul>
-                <ol start="4">
-                    <li>Добавь блок <code>default</code>, который также пишет в консоль <strong>"Используем кулаки"</strong>.</li>
-                    <li>Проверь работу программы со всеми значениями.</li>
-                </ol>
-                <p><strong>Проверка:</strong> При <code>weaponType = "sword"</code> выводится только одна соответствующая строка.</p>
                 <pre><code>string weaponType = "sword";
-
-void Start()
-{
-    switch (weaponType)
-    {
-        case "sword":
-            Debug.Log("Наносит 20 урона в ближнем бою");
-            break;
-        case "bow":
-            Debug.Log("Стреляет стрелами на 50 метров");
-            break;
-        case "staff":
-            Debug.Log("Восстанавливает 10 маны в секунду");
-            break;
-        default:
-            Debug.Log("Неизвестное оружие");
-            Debug.Log("Используем кулаки");
-            break;
+void Start() {
+    switch (weaponType) {
+        case "sword": Debug.Log("Наносит 20 урона в ближнем бою"); break;
+        case "bow": Debug.Log("Стреляет стрелами на 50 метров"); break;
+        case "staff": Debug.Log("Восстанавливает 10 маны в секунду"); break;
+        case "dagger": Debug.Log("Быстрая атака с ядом"); break;
+        default: Debug.Log("Неизвестное оружие"); Debug.Log("Используем кулаки"); break;
     }
 }</code></pre>
             </div>
 
             <!-- Практика 5 -->
             <div class="card" id="practice5">
-                <h3>Практика 5 (к лекции 4): «Создатель приветствий»</h3>
-                <p><strong>Цель:</strong> Освоить объявление методов, параметры, возврат значений и области видимости.</p>
-                <h4>Задание:</h4>
+                <h3>Практика 5: «Создатель приветствий»</h3>
+                <p><strong>Цель:</strong> Освоить объявление методов, параметры, возврат значений, область видимости.</p>
+                <h4>Пошаговый план:</h4>
                 <ol>
-                    <li>Создай скрипт <code>GreetingMaker</code>.</li>
-                    <li>Напиши метод <code>void SayHello(string name)</code>, который выводит в консоль <strong>"Привет, [name]!"</strong>.</li>
-                    <li>Напиши метод <code>int DoubleNumber(int number)</code>, который принимает число и возвращает его умноженным на 2.</li>
-                    <li>Напиши метод <code>bool IsAdult(int age)</code>, который возвращает <code>true</code>, если возраст <code>>= 18</code>, иначе <code>false</code>.</li>
-                    <li>В методе <code>Start</code>:</li>
+                    <li>Создайте новый проект: <code>GreetingMakerProject</code>.</li>
+                    <li>Создайте пустой объект <code>Greeter</code>.</li>
+                    <li>Добавьте скрипт <code>GreetingMaker</code>.</li>
+                    <li>Откройте скрипт.</li>
+                    <li>Напишите метод вне Start: <code>void SayHello(string name) { }</code></li>
+                    <li>Внутри: <code>Debug.Log("Привет, " + name + "!");</code></li>
+                    <li>Ниже напишите: <code>int DoubleNumber(int number) { }</code></li>
+                    <li>Внутри: <code>return number * 2;</code></li>
+                    <li>Ниже напишите: <code>bool IsAdult(int age) { }</code></li>
+                    <li>Внутри: <code>return age >= 18;</code></li>
+                    <li>В Start вызовите: <code>SayHello("ТвоёИмя");</code></li>
+                    <li>Объявите: <code>int result = DoubleNumber(7);</code></li>
+                    <li>Выведите: <code>Debug.Log("Удвоенное: " + result);</code></li>
+                    <li>Выведите: <code>Debug.Log("Взрослый (16)? " + IsAdult(16));</code></li>
+                    <li>Выведите: <code>Debug.Log("Взрослый (20)? " + IsAdult(20));</code></li>
+                    <li>Сохраните и запустите.</li>
+                    <li>Проверьте: 4 строки в консоли.</li>
+                    <li>Проверьте: результат DoubleNumber(7) = 14.</li>
+                    <li>Проверьте: IsAdult(16) = False.</li>
+                    <li>Проверьте: IsAdult(20) = True.</li>
+                    <li>Измените число в DoubleNumber на 10 — проверьте результат 20.</li>
+                    <li>Добавьте вызов SayHello с другим именем.</li>
                 </ol>
-                <ul>
-                    <li>Вызови <code>SayHello</code> со своим именем.</li>
-                    <li>Объяви переменную <code>int result = DoubleNumber(7);</code> и выведи её в консоль.</li>
-                    <li>С помощью <code>IsAdult</code> проверь возраст 16 и 20, выведи результат как <strong>"Совершеннолетний? True/False"</strong>.</li>
-                </ul>
-                <p><strong>Проверка:</strong> В консоли должно быть 4 строки: приветствие, число 14, два булевых значения.</p>
-                <pre><code>void SayHello(string name)
-{
-    Debug.Log("Привет, " + name + "!");
-}
-
-int DoubleNumber(int number)
-{
-    return number * 2;
-}
-
-bool IsAdult(int age)
-{
-    return age >= 18;
-}
-
-void Start()
-{
-    SayHello("ТвоёИмя");
-    int result = DoubleNumber(7);
-    Debug.Log("Удвоенное число: " + result);
-    Debug.Log("Совершеннолетний? " + IsAdult(16));
-    Debug.Log("Совершеннолетний? " + IsAdult(20));
+                <pre><code>void SayHello(string name) { Debug.Log("Привет, " + name + "!"); }
+int DoubleNumber(int n) { return n * 2; }
+bool IsAdult(int age) { return age >= 18; }
+void Start() {
+    SayHello("Алекс");
+    int r = DoubleNumber(7);
+    Debug.Log("Удвоенное: " + r);
+    Debug.Log("Взрослый (16)? " + IsAdult(16));
+    Debug.Log("Взрослый (20)? " + IsAdult(20));
 }</code></pre>
             </div>
 
             <!-- Практика 6 -->
             <div class="card" id="practice6">
-                <h3>Практика 6 (к лекции 5): «Список победителей»</h3>
-                <p><strong>Цель:</strong> Научиться работать со статическими массивами, <code>List&lt;T&gt;</code> и циклами.</p>
-                <h4>Задание:</h4>
+                <h3>Практика 6: «Список победителей»</h3>
+                <p><strong>Цель:</strong> Работа с массивами, List&lt;T&gt; и циклами.</p>
+                <h4>Пошаговый план:</h4>
                 <ol>
-                    <li>Создай скрипт <code>WinnerList</code>.</li>
-                    <li>Объяви массив <code>string[] winners</code> с 3 именами победителей.</li>
-                    <li>Объяви <code>List&lt;int&gt; scores</code> и добавь в него вручную 5 чисел (очки).</li>
-                    <li>В методе <code>Start</code>:</li>
+                    <li>Создайте новый проект: <code>WinnerListProject</code>.</li>
+                    <li>Создайте пустой объект <code>ScoreBoard</code>.</li>
+                    <li>Добавьте скрипт <code>WinnerList</code>.</li>
+                    <li>В начале скрипта добавьте: <code>using System.Collections.Generic;</code></li>
+                    <li>Объявите массив: <code>string[] winners = { "Анна", "Борис", "Виктор" };</code></li>
+                    <li>Объявите список: <code>List&lt;int&gt; scores = new List&lt;int&gt;() { 10, 25, 40, 5, 100 };</code></li>
+                    <li>В Start выведите заголовок: <code>Debug.Log("=== Победители ===");</code></li>
+                    <li>Циклом for выведите всех winners: <code>for (int i = 0; i < winners.Length; i++)</code></li>
+                    <li>Внутри: <code>Debug.Log(winners[i]);</code></li>
+                    <li>Выведите заголовок для очков: <code>Debug.Log("=== Очки ===");</code></li>
+                    <li>Циклом foreach выведите scores.</li>
+                    <li>Добавьте новый элемент: <code>scores.Add(999);</code></li>
+                    <li>Удалите первый: <code>scores.RemoveAt(0);</code></li>
+                    <li>Выведите заголовок: <code>Debug.Log("=== Обновлённый список ===");</code></li>
+                    <li>Циклом for выведите обновлённый scores.</li>
+                    <li>Выведите: <code>Debug.Log("Победителей: " + winners.Length);</code></li>
+                    <li>Выведите: <code>Debug.Log("Очков: " + scores.Count);</code></li>
+                    <li>Сохраните и запустите.</li>
+                    <li>Проверьте: очков стало 5 (5+1-1).</li>
+                    <li>Проверьте: первый элемент списка изменился.</li>
                 </ol>
-                <ul>
-                    <li>Выведи всех победителей из массива через цикл <code>for</code>.</li>
-                    <li>Выведи все очки из списка через цикл <code>foreach</code>.</li>
-                    <li>Добавь в список <code>scores</code> новое число (например, 999) с помощью <code>.Add()</code>.</li>
-                    <li>Удали из списка первое число с помощью <code>.RemoveAt(0)</code>.</li>
-                    <li>Выведи обновлённый список через <code>for</code>.</li>
-                </ul>
-                <ol start="5">
-                    <li>Выведи в консоль: <strong>"Количество победителей: X"</strong>, <strong>"Количество очков после изменений: Y"</strong>, используя <code>.Length</code> и <code>.Count</code>.</li>
-                </ol>
-                <p><strong>Проверка:</strong> Количество элементов в списке должно уменьшиться на 1 после удаления.</p>
                 <pre><code>using System.Collections.Generic;
-
-string[] winners = { "Игрок1", "Игрок2", "Игрок3" };
-List&lt;int&gt; scores = new List&lt;int&gt;() { 10, 25, 40, 5, 100 };
-
-void Start()
-{
-    Debug.Log("=== Победители ===");
-    for (int i = 0; i < winners.Length; i++)
-    {
-        Debug.Log(winners[i]);
-    }
-
-    Debug.Log("=== Очки ===");
-    foreach (int score in scores)
-    {
-        Debug.Log(score);
-    }
-
-    scores.Add(999);
-    scores.RemoveAt(0);
-
-    Debug.Log("=== Обновлённый список очков ===");
-    for (int i = 0; i < scores.Count; i++)
-    {
-        Debug.Log(scores[i]);
-    }
-
-    Debug.Log("Количество победителей: " + winners.Length);
-    Debug.Log("Количество очков после изменений: " + scores.Count);
+string[] winners = { "Анна", "Борис", "Виктор" };
+List<int> scores = new List<int>() { 10, 25, 40, 5, 100 };
+void Start() {
+    foreach (var w in winners) Debug.Log(w);
+    scores.Add(999); scores.RemoveAt(0);
+    foreach (var s in scores) Debug.Log(s);
+    Debug.Log("Всего: " + scores.Count);
 }</code></pre>
             </div>
 
             <!-- Практика 7 -->
             <div class="card" id="practice7">
-                <h3>Практика 7 (к лекции 5): «Сумматор и поиск максимума»</h3>
+                <h3>Практика 7: «Сумматор и поиск максимума»</h3>
                 <p><strong>Цель:</strong> Закрепить циклы и работу с коллекциями.</p>
-                <h4>Задание:</h4>
+                <h4>Пошаговый план:</h4>
                 <ol>
-                    <li>Создай скрипт <code>ArrayCalculator</code>.</li>
-                    <li>Объяви массив <code>int[] numbers = { 12, 45, 7, 89, 34, 67, 23 }</code>.</li>
-                    <li>Напиши метод <code>int FindSum(int[] arr)</code>, который возвращает сумму всех элементов.</li>
-                    <li>Напиши метод <code>int FindMax(int[] arr)</code>, который возвращает максимальное значение.</li>
-                    <li>Напиши метод <code>int FindMin(int[] arr)</code>, который возвращает минимальное значение.</li>
-                    <li>В методе <code>Start</code> вызови все три метода и выведи их результаты в консоль.</li>
+                    <li>Создайте новый проект: <code>ArrayCalculatorProject</code>.</li>
+                    <li>Создайте пустой объект <code>Calculator</code>.</li>
+                    <li>Добавьте скрипт <code>ArrayCalculator</code>.</li>
+                    <li>Объявите массив: <code>int[] numbers = { 12, 45, 7, 89, 34, 67, 23 };</code></li>
+                    <li>Напишите метод: <code>int FindSum(int[] arr) { }</code></li>
+                    <li>Внутри объявите: <code>int sum = 0;</code></li>
+                    <li>Циклом for пройдите по arr и суммируйте: <code>sum += arr[i];</code></li>
+                    <li>Верните: <code>return sum;</code></li>
+                    <li>Напишите метод: <code>int FindMax(int[] arr) { }</code></li>
+                    <li>Внутри: <code>int max = arr[0];</code></li>
+                    <li>Циклом for (с i=1) сравнивайте: <code>if (arr[i] > max) max = arr[i];</code></li>
+                    <li>Верните max.</li>
+                    <li>Напишите метод: <code>int FindMin(int[] arr) { }</code></li>
+                    <li>Аналогично, но: <code>if (arr[i] < min) min = arr[i];</code></li>
+                    <li>В Start выведите: <code>Debug.Log("Сумма: " + FindSum(numbers));</code></li>
+                    <li>Выведите максимум.</li>
+                    <li>Выведите минимум.</li>
+                    <li>Запустите — проверьте: сумма = 277.</li>
+                    <li>Проверьте: максимум = 89.</li>
+                    <li>Проверьте: минимум = 7.</li>
+                    <li>Добавьте своё число в массив и перепроверьте.</li>
                 </ol>
-                <p><strong>Проверка:</strong> Сумма = 277, максимум = 89, минимум = 7.</p>
                 <pre><code>int[] numbers = { 12, 45, 7, 89, 34, 67, 23 };
-
-int FindSum(int[] arr)
-{
-    int sum = 0;
-    for (int i = 0; i < arr.Length; i++)
-    {
-        sum += arr[i];
-    }
-    return sum;
-}
-
-int FindMax(int[] arr)
-{
-    int max = arr[0];
-    for (int i = 1; i < arr.Length; i++)
-    {
-        if (arr[i] > max) max = arr[i];
-    }
-    return max;
-}
-
-int FindMin(int[] arr)
-{
-    int min = arr[0];
-    for (int i = 1; i < arr.Length; i++)
-    {
-        if (arr[i] < min) min = arr[i];
-    }
-    return min;
-}
-
-void Start()
-{
+int FindSum(int[] a) { int s=0; foreach(var x in a) s+=x; return s; }
+int FindMax(int[] a) { int m=a[0]; for(int i=1;i<a.Length;i++) if(a[i]>m) m=a[i]; return m; }
+int FindMin(int[] a) { int m=a[0]; for(int i=1;i<a.Length;i++) if(a[i]<m) m=a[i]; return m; }
+void Start() {
     Debug.Log("Сумма: " + FindSum(numbers));
-    Debug.Log("Максимум: " + FindMax(numbers));
-    Debug.Log("Минимум: " + FindMin(numbers));
+    Debug.Log("Макс: " + FindMax(numbers));
+    Debug.Log("Мин: " + FindMin(numbers));
 }</code></pre>
             </div>
 
             <!-- Практика 8 -->
             <div class="card" id="practice8">
-                <h3>Практика 8 (к лекции 6): «Счётчик врагов»</h3>
-                <p><strong>Цель:</strong> Понять разницу между обычными и статическими полями, а также научиться получать компоненты.</p>
-                <h4>Задание:</h4>
+                <h3>Практика 8: «Счётчик врагов»</h3>
+                <p><strong>Цель:</strong> Понять разницу между обычными и статическими полями, получение компонентов.</p>
+                <h4>Пошаговый план:</h4>
                 <ol>
-                    <li>Создай два скрипта: <code>Enemy</code> и <code>EnemyCounter</code>.</li>
-                    <li>В скрипте <code>Enemy</code>:</li>
+                    <li>Создайте новый проект: <code>EnemyCounterProject</code>.</li>
+                    <li>В Hierarchy создайте 3 пустых объекта: Enemy1, Enemy2, Enemy3.</li>
+                    <li>Создайте ещё один объект: <code>CounterDisplay</code>.</li>
+                    <li>Создайте скрипт <code>Enemy</code>.</li>
+                    <li>В Enemy объявите: <code>public static int totalEnemies = 0;</code></li>
+                    <li>Объявите: <code>public int health = 50;</code></li>
+                    <li>В Start напишите: <code>totalEnemies++;</code></li>
+                    <li>Создайте метод: <code>void OnDestroy() { totalEnemies--; }</code></li>
+                    <li>Создайте метод: <code>public void TakeDamage(int dmg) { }</code></li>
+                    <li>Внутри: <code>health -= dmg;</code></li>
+                    <li>Выведите: <code>Debug.Log("Осталось: " + health);</code></li>
+                    <li>Проверьте: <code>if (health <= 0) Destroy(gameObject);</code></li>
+                    <li>Прикрепите Enemy к Enemy1, Enemy2, Enemy3.</li>
+                    <li>Создайте скрипт <code>EnemyCounter</code>.</li>
+                    <li>В Update напишите: <code>if (Input.GetKeyDown(KeyCode.Space))</code></li>
+                    <li>Внутри: <code>Debug.Log("Врагов: " + Enemy.totalEnemies);</code></li>
+                    <li>Прикрепите EnemyCounter к CounterDisplay.</li>
+                    <li>Запустите сцену.</li>
+                    <li>Нажмите пробел — должно показать "Врагов: 3".</li>
+                    <li>В Inspector у Enemy1 измените health на 0 вручную (через правую панель).</li>
+                    <li>Вызовите TakeDamage через контекстное меню скрипта.</li>
+                    <li>Нажмите пробел — теперь "Врагов: 2".</li>
+                    <li>Уничтожьте ещё одного — должно стать 1.</li>
+                    <li>Остановите сцену.</li>
                 </ol>
-                <ul>
-                    <li>Объяви <code>public static int totalEnemies = 0</code>.</li>
-                    <li>В методе <code>Start</code> увеличь <code>totalEnemies</code> на 1.</li>
-                    <li>В методе <code>OnDestroy</code> (вызывается при удалении объекта) уменьши <code>totalEnemies</code> на 1.</li>
-                    <li>Объяви <code>public int health = 50</code>.</li>
-                    <li>Добавь метод <code>public void TakeDamage(int damage)</code>, который уменьшает здоровье и выводит в консоль <strong>"У врага осталось X здоровья"</strong>. Если здоровье <code><= 0</code> — уничтожь объект командой <code>Destroy(gameObject)</code>.</li>
-                </ul>
-                <ol start="3">
-                    <li>В скрипте <code>EnemyCounter</code>:</li>
-                </ol>
-                <ul>
-                    <li>В методе <code>Update</code> выводи в консоль текущее значение <code>Enemy.totalEnemies</code> (но не каждый кадр — используй <code>if (Input.GetKeyDown(KeyCode.Space))</code>).</li>
-                </ul>
-                <ol start="4">
-                    <li>Создай на сцене 3 объекта, на каждый повесь скрипт <code>Enemy</code>. На четвёртый объект повесь <code>EnemyCounter</code>.</li>
-                    <li>При нажатии пробела в консоли должно появляться число живых врагов. При уничтожении врага (например, вызвав <code>TakeDamage</code> из другого скрипта или через инспектор) — счётчик уменьшается.</li>
-                </ol>
-                <p><strong>Проверка:</strong> При старте — 3 врага. После уничтожения одного — 2.</p>
-                <pre><code>// Скрипт Enemy.cs
+                <pre><code>// Enemy.cs
 public static int totalEnemies = 0;
 public int health = 50;
+void Start() { totalEnemies++; }
+void OnDestroy() { totalEnemies--; }
+public void TakeDamage(int dmg) { health -= dmg; Debug.Log("Осталось: " + health); if (health <= 0) Destroy(gameObject); }
 
-void Start()
-{
-    totalEnemies++;
-}
-
-void OnDestroy()
-{
-    totalEnemies--;
-}
-
-public void TakeDamage(int damage)
-{
-    health -= damage;
-    Debug.Log("У врага осталось " + health + " здоровья");
-    if (health <= 0)
-    {
-        Destroy(gameObject);
-    }
-}
-
-// Скрипт EnemyCounter.cs
-void Update()
-{
-    if (Input.GetKeyDown(KeyCode.Space))
-    {
-        Debug.Log("Живых врагов: " + Enemy.totalEnemies);
-    }
-}</code></pre>
+// EnemyCounter.cs
+void Update() { if (Input.GetKeyDown(KeyCode.Space)) Debug.Log("Врагов: " + Enemy.totalEnemies); }</code></pre>
             </div>
         </div>
 
@@ -1397,218 +1349,310 @@ void Update()
                 <div id="testContainer"></div>
             </div>
         </div>
-    <script>
-        function showPage(name) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            var page = document.getElementById('page-' + name);
-            if (page) page.classList.add('active');
+  <script>
+    function showPage(name) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        var page = document.getElementById('page-' + name);
+        if (page) page.classList.add('active');
 
-            document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
-            var nav = document.getElementById('nav-' + name);
-            if (nav) nav.classList.add('active');
+        document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
+        var nav = document.getElementById('nav-' + name);
+        if (nav) nav.classList.add('active');
 
-            if (name === 'tests') {
-                setTimeout(function() {
+        if (name === 'tests') {
+            setTimeout(function() {
+                renderTestNav();
+                renderTestPage();
+            }, 50);
+        }
+
+        var main = document.querySelector('.main');
+        if (main) main.scrollTop = 0;
+    }
+
+    var testData = [
+        { stage: "📅 Этап 1: Базовый синтаксис и среда разработки", type: "closed", q: "1. Какой символ обязательно ставить в конце инструкции в C#?", o: [". (точка)", "; (точка с запятой)", ": (двоеточие)", ", (запятая)"], c: 1, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "closed", q: "2. Какой метод Unity вызывается один раз при запуске сцены?", o: ["Update()", "Awake()", "Start()", "FixedUpdate()"], c: 2, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "closed", q: "3. Что означает LTS в контексте версий Unity?", o: ["Light Transport System", "Long Term Support", "Local Test Server", "Low Thread Speed"], c: 1, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "open", q: "4. Какая среда разработки (IDE) устанавливается вместе с Unity по умолчанию? (два слова)", o: [], c: -1, openA: "Visual Studio", chrono: [], multi: [], match: null },
+        { stage: "", type: "closed", q: "5. Что делает директива using в начале скрипта?", o: ["Подключает пространства имён", "Запускает код", "Объявляет переменную", "Завершает программу"], c: 0, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "closed", q: "6. C# является регистрозависимым языком. Что из этого правильно?", o: ["debug.log", "Debug.Log", "DEBUG.LOG", "Debug.log"], c: 1, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "closed", q: "7. Как называются участки кода после символов //, которые игнорируются компилятором?", o: ["Директивы", "Комментарии", "Методы", "Переменные"], c: 1, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "multi", q: "8. Какие методы автоматически создаются в новом скрипте Unity? (выберите два)", o: ["Start()", "Update()", "Awake()", "FixedUpdate()"], c: [0, 1], openA: "", chrono: [], multi: [0, 1], match: null },
+        { stage: "", type: "closed", q: "9. Где размещаются все игровые объекты в Unity?", o: ["В инспекторе", "В сцене", "В консоли", "В проекте"], c: 1, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "chrono", q: "10. Расположите в хронологической последовательности создание первого скрипта:", o: [], c: -1, openA: "", chrono: ["Создать новый проект в Unity Hub", "Выбрать объект в иерархии", "Нажать Add Component и ввести имя скрипта", "Открыть скрипт двойным кликом в IDE"], multi: [], match: null },
+
+        { stage: "📅 Этап 2: Переменные, типы данных, условные конструкции", type: "closed", q: "11. Какой тип данных используется для целых чисел?", o: ["float", "string", "int", "bool"], c: 2, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "closed", q: "12. Чему равно значение по умолчанию для типа int?", o: ["null", "0", "-1", "1"], c: 1, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "closed", q: "13. Какой суффикс обязателен при записи float-литерала 3.14?", o: ["d", "f", "m", "u"], c: 1, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "open", q: "14. Напишите оператор, который увеличивает переменную на 1.", o: [], c: -1, openA: "++", chrono: [], multi: [], match: null },
+        { stage: "", type: "closed", q: "15. Чему равно значение по умолчанию для типа bool?", o: ["true", "false", "null", "0"], c: 1, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "closed", q: "16. Какой стиль именования переменных принят в C#?", o: ["PascalCase", "camelCase", "snake_case", "kebab-case"], c: 1, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "closed", q: "17. Что выведет: if (5 > 3) Debug.Log(\"Да\"); else Debug.Log(\"Нет\"); ?", o: ["Да", "Нет", "Ошибка", "Ничего"], c: 0, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "multi", q: "18. Какие из перечисленных являются логическими операторами в C#? (выберите два)", o: ["&&", "||", "+=", "++"], c: [0, 1], openA: "", chrono: [], multi: [0, 1], match: null },
+        { stage: "", type: "closed", q: "19. Сколько блоков else можно использовать с одним if?", o: ["0", "1", "Сколько угодно", "2"], c: 1, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "chrono", q: "20. Расположите в порядке выполнения условную конструкцию:", o: [], c: -1, openA: "", chrono: ["Проверка условия в if", "Выполнение блока if (если true)", "Проверка условия в else if (если false)", "Выполнение блока else (если всё false)"], multi: [], match: null },
+
+        { stage: "📅 Этап 3: Методы, массивы, циклы, классы и компоненты", type: "closed", q: "21. Что означает void в объявлении метода?", o: ["Метод возвращает int", "Метод не возвращает значение", "Метод статический", "Метод приватный"], c: 1, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "closed", q: "22. Какое ключевое слово возвращает значение из метода?", o: ["break", "return", "continue", "exit"], c: 1, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "closed", q: "23. С какого индекса начинается массив в C#?", o: ["1", "0", "-1", "Зависит от массива"], c: 1, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "open", q: "24. Напишите название метода для добавления элемента в List<T>.", o: [], c: -1, openA: "Add", chrono: [], multi: [], match: null },
+        { stage: "", type: "closed", q: "25. Какая конструкция перебирает все элементы коллекции без индекса?", o: ["for", "while", "foreach", "switch"], c: 2, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "closed", q: "26. От какого класса должны наследоваться скрипты-компоненты в Unity?", o: ["GameObject", "MonoBehaviour", "ComponentBase", "UnityScript"], c: 1, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "closed", q: "27. Какой модификатор делает поле видимым в инспекторе Unity?", o: ["private", "protected", "public", "internal"], c: 2, openA: "", chrono: [], multi: [], match: null },
+        { stage: "", type: "multi", q: "28. Какие методы можно использовать для поиска компонентов в Unity? (выберите два)", o: ["GetComponent<T>()", "FindObjectOfType<T>()", "CreateComponent<T>()", "DeleteComponent<T>()"], c: [0, 1], openA: "", chrono: [], multi: [0, 1], match: null },
+        { stage: "", type: "match", q: "29. Соотнесите модификаторы доступа с их описанием:", o: [], c: -1, openA: "", chrono: [], multi: [], match: { "public": "Доступен отовсюду и виден в инспекторе", "private": "Доступен только внутри своего класса", "protected": "Доступен внутри класса и его наследников", "internal": "Доступен только внутри текущей сборки" } },
+        { stage: "", type: "match", q: "30. Соотнесите тип данных с его примером:", o: [], c: -1, openA: "", chrono: [], multi: [], match: { "int": "42", "float": "3.14f", "bool": "true", "string": "\"Hello\"" } }
+    ];
+
+    var perPage = 10,
+        currentPage = 0,
+        totalPages = Math.ceil(testData.length / perPage),
+        chronoOrders = {};
+
+    function renderTestNav() {
+        var nav = document.getElementById('testNav');
+        if (!nav) return;
+        nav.innerHTML = '';
+        for (var i = 0; i < totalPages; i++) {
+            var btn = document.createElement('button');
+            var s = i * perPage + 1;
+            var e = Math.min((i + 1) * perPage, testData.length);
+            btn.textContent = s + '–' + e;
+            if (i === currentPage) btn.className = 'active-page';
+            btn.onclick = (function(p) {
+                return function() {
+                    currentPage = p;
                     renderTestNav();
                     renderTestPage();
-                }, 50);
+                };
+            })(i);
+            nav.appendChild(btn);
+        }
+    }
+
+    function shuffleArray(arr) {
+        var a = arr.slice();
+        for (var i = a.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
+        return a;
+    }
+
+    function renderTestPage() {
+        var container = document.getElementById('testContainer');
+        if (!container) return;
+        var s = currentPage * perPage,
+            e = Math.min(s + perPage, testData.length),
+            h = '',
+            currentStage = '';
+        for (var i = s; i < e; i++) {
+            var item = testData[i];
+            if (item.stage && item.stage !== currentStage) {
+                currentStage = item.stage;
+                h += '<div class="stage-header">' + currentStage + '</div>';
             }
 
-            var main = document.querySelector('.main');
-            if (main) main.scrollTop = 0;
-        }
+            var typeLabel = item.type === 'open' ? '✏️ открытый' :
+                item.type === 'closed' ? '🔘 закрытый' :
+                item.type === 'multi' ? '☑️ множественный' :
+                item.type === 'chrono' ? '🕐 хронологический' :
+                '🔗 соответствие';
 
-        var testData = [
-            { stage: "📅 Этап 1: Базовый синтаксис и среда разработки", type: "closed", q: "1. Какой символ обязательно ставить в конце инструкции в C#?", o: [". (точка)", "; (точка с запятой)", ": (двоеточие)", ", (запятая)"], c: 1, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "closed", q: "2. Какой метод Unity вызывается один раз при запуске сцены?", o: ["Update()", "Awake()", "Start()", "FixedUpdate()"], c: 2, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "closed", q: "3. Что означает LTS в контексте версий Unity?", o: ["Light Transport System", "Long Term Support", "Local Test Server", "Low Thread Speed"], c: 1, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "open", q: "4. Какая среда разработки (IDE) устанавливается вместе с Unity по умолчанию? (два слова)", o: [], c: -1, openA: "Visual Studio", chrono: [], multi: [] },
-            { stage: "", type: "closed", q: "5. Что делает директива using в начале скрипта?", o: ["Подключает пространства имён", "Запускает код", "Объявляет переменную", "Завершает программу"], c: 0, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "closed", q: "6. C# является регистрозависимым языком. Что из этого правильно?", o: ["debug.log", "Debug.Log", "DEBUG.LOG", "Debug.log"], c: 1, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "closed", q: "7. Как называются участки кода после символов //, которые игнорируются компилятором?", o: ["Директивы", "Комментарии", "Методы", "Переменные"], c: 1, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "multi", q: "8. Какие методы автоматически создаются в новом скрипте Unity? (выберите два)", o: ["Start()", "Update()", "Awake()", "FixedUpdate()"], c: [0, 1], openA: "", chrono: [], multi: [0, 1] },
-            { stage: "", type: "closed", q: "9. Где размещаются все игровые объекты в Unity?", o: ["В инспекторе", "В сцене", "В консоли", "В проекте"], c: 1, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "chrono", q: "10. Расположите в хронологической последовательности создание первого скрипта:", o: [], c: -1, openA: "", chrono: ["Создать новый проект в Unity Hub", "Выбрать объект в иерархии", "Нажать Add Component и ввести имя скрипта", "Открыть скрипт двойным кликом в IDE"], multi: [] },
-            { stage: "📅 Этап 2: Переменные, типы данных, условные конструкции", type: "closed", q: "11. Какой тип данных используется для целых чисел?", o: ["float", "string", "int", "bool"], c: 2, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "closed", q: "12. Чему равно значение по умолчанию для типа int?", o: ["null", "0", "-1", "1"], c: 1, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "closed", q: "13. Какой суффикс обязателен при записи float-литерала 3.14?", o: ["d", "f", "m", "u"], c: 1, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "open", q: "14. Напишите оператор, который увеличивает переменную на 1.", o: [], c: -1, openA: "++", chrono: [], multi: [] },
-            { stage: "", type: "closed", q: "15. Чему равно значение по умолчанию для типа bool?", o: ["true", "false", "null", "0"], c: 1, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "closed", q: "16. Какой стиль именования переменных принят в C#?", o: ["PascalCase", "camelCase", "snake_case", "kebab-case"], c: 1, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "closed", q: "17. Что выведет: if (5 > 3) Debug.Log(\"Да\"); else Debug.Log(\"Нет\"); ?", o: ["Да", "Нет", "Ошибка", "Ничего"], c: 0, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "multi", q: "18. Какие из перечисленных являются логическими операторами в C#? (выберите два)", o: ["&&", "||", "+=", "++"], c: [0, 1], openA: "", chrono: [], multi: [0, 1] },
-            { stage: "", type: "closed", q: "19. Сколько блоков else можно использовать с одним if?", o: ["0", "1", "Сколько угодно", "2"], c: 1, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "chrono", q: "20. Расположите в порядке выполнения условную конструкцию:", o: [], c: -1, openA: "", chrono: ["Проверка условия в if", "Выполнение блока if (если true)", "Проверка условия в else if (если false)", "Выполнение блока else (если всё false)"], multi: [] },
-            { stage: "📅 Этап 3: Методы, массивы, циклы, классы и компоненты", type: "closed", q: "21. Что означает void в объявлении метода?", o: ["Метод возвращает int", "Метод не возвращает значение", "Метод статический", "Метод приватный"], c: 1, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "closed", q: "22. Какое ключевое слово возвращает значение из метода?", o: ["break", "return", "continue", "exit"], c: 1, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "closed", q: "23. С какого индекса начинается массив в C#?", o: ["1", "0", "-1", "Зависит от массива"], c: 1, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "open", q: "24. Напишите название метода для добавления элемента в List<T>.", o: [], c: -1, openA: "Add", chrono: [], multi: [] },
-            { stage: "", type: "closed", q: "25. Какая конструкция перебирает все элементы коллекции без индекса?", o: ["for", "while", "foreach", "switch"], c: 2, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "closed", q: "26. От какого класса должны наследоваться скрипты-компоненты в Unity?", o: ["GameObject", "MonoBehaviour", "ComponentBase", "UnityScript"], c: 1, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "closed", q: "27. Какой модификатор делает поле видимым в инспекторе Unity?", o: ["private", "protected", "public", "internal"], c: 2, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "multi", q: "28. Какие методы можно использовать для поиска компонентов в Unity? (выберите два)", o: ["GetComponent<T>()", "FindObjectOfType<T>()", "CreateComponent<T>()", "DeleteComponent<T>()"], c: [0, 1], openA: "", chrono: [], multi: [0, 1] },
-            { stage: "", type: "closed", q: "29. Ключевое слово static означает, что поле принадлежит...", o: ["Конкретному объекту", "Классу в целом", "Только методам", "Только полям"], c: 1, openA: "", chrono: [], multi: [] },
-            { stage: "", type: "closed", q: "30. Что такое «магическое число» в контексте чистого кода?", o: ["Число 0", "Число без поясняющей переменной", "Максимальное int", "Случайное число"], c: 1, openA: "", chrono: [], multi: [] }
-        ];
+            h += '<div class="test-question" id="q' + i + '">';
+            h += '<div class="q">' + item.q + ' <span style="font-size:0.75rem;color:#64748b;">(' + typeLabel + ')</span></div>';
 
-        var perPage = 10, currentPage = 0, totalPages = Math.ceil(testData.length / perPage), chronoOrders = {};
-
-        function renderTestNav() {
-            var nav = document.getElementById('testNav');
-            if (!nav) return;
-            nav.innerHTML = '';
-            for (var i = 0; i < totalPages; i++) {
-                var btn = document.createElement('button');
-                var s = i * perPage + 1;
-                var e = Math.min((i + 1) * perPage, testData.length);
-                btn.textContent = s + '–' + e;
-                if (i === currentPage) btn.className = 'active-page';
-                btn.onclick = (function(p) { return function() { currentPage = p; renderTestNav(); renderTestPage(); }; })(i);
-                nav.appendChild(btn);
-            }
-        }
-
-        function shuffleArray(arr) {
-            var a = arr.slice();
-            for (var i = a.length - 1; i > 0; i--) {
-                var j = Math.floor(Math.random() * (i + 1));
-                var temp = a[i]; a[i] = a[j]; a[j] = temp;
-            }
-            return a;
-        }
-
-        function renderTestPage() {
-            var container = document.getElementById('testContainer');
-            if (!container) return;
-            var s = currentPage * perPage, e = Math.min(s + perPage, testData.length), h = '', currentStage = '';
-            for (var i = s; i < e; i++) {
-                var item = testData[i];
-                if (item.stage && item.stage !== currentStage) {
-                    currentStage = item.stage;
-                    h += '<div class="stage-header">' + currentStage + '</div>';
+            if (item.type === 'closed') {
+                h += '<ul class="quiz-options">';
+                for (var j = 0; j < item.o.length; j++) {
+                    h += '<li onclick="checkClosed(' + i + ',' + j + ')" id="opt-' + i + '-' + j + '">' + String.fromCharCode(65 + j) + ') ' + item.o[j] + '</li>';
                 }
-                var typeLabel = item.type === 'open' ? '✏️ открытый' : item.type === 'closed' ? '🔘 закрытый' : item.type === 'multi' ? '☑️ множественный' : '🕐 хронологический';
-                h += '<div class="test-question" id="q' + i + '"><div class="q">' + item.q + ' <span style="font-size:0.75rem;color:#64748b;">(' + typeLabel + ')</span></div>';
-
-                if (item.type === 'closed') {
-                    h += '<ul class="quiz-options">';
-                    for (var j = 0; j < item.o.length; j++) {
-                        h += '<li onclick="checkClosed(' + i + ',' + j + ')" id="opt-' + i + '-' + j + '">' + String.fromCharCode(65 + j) + ') ' + item.o[j] + '</li>';
-                    }
-                    h += '</ul>';
-                } else if (item.type === 'open') {
-                    h += '<div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">';
-                    h += '<input type="text" class="open-answer-input" id="open-' + i + '" placeholder="Введите ответ...">';
-                    h += '<button class="check-btn" id="check-btn-' + i + '" onclick="checkOpen(' + i + ')">Проверить</button></div>';
-                } else if (item.type === 'multi') {
-                    h += '<p class="multi-hint">🔘 Выберите ВСЕ правильные варианты, затем нажмите «Проверить».</p><ul class="quiz-options">';
-                    for (var j = 0; j < item.o.length; j++) {
-                        h += '<li onclick="toggleMulti(' + i + ',' + j + ')" id="opt-' + i + '-' + j + '">' + String.fromCharCode(65 + j) + ') ' + item.o[j] + '</li>';
-                    }
-                    h += '</ul><button class="check-btn" id="multi-check-' + i + '" onclick="checkMulti(' + i + ')" style="margin-top:0.5rem;">Проверить</button>';
-                } else if (item.type === 'chrono') {
-                    if (!chronoOrders[i]) chronoOrders[i] = shuffleArray(item.chrono);
-                    h += '<p class="chrono-hint">🖱 Перетащите элементы в правильном порядке.</p><ul class="chrono-list" id="chrono-' + i + '">';
-                    for (var k = 0; k < chronoOrders[i].length; k++) {
-                        h += '<li draggable="true" data-index="' + k + '" data-original="' + chronoOrders[i][k].replace(/"/g, '&quot;') + '" id="chrono-item-' + i + '-' + k + '"><span class="chrono-num">' + (k + 1) + '</span>' + chronoOrders[i][k] + '</li>';
-                    }
-                    h += '</ul><button class="check-btn" id="chrono-check-' + i + '" onclick="checkChrono(' + i + ')" style="margin-top:0.5rem;">Проверить порядок</button>';
+                h += '</ul>';
+            } else if (item.type === 'open') {
+                h += '<div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">';
+                h += '<input type="text" class="open-answer-input" id="open-' + i + '" placeholder="Введите ответ...">';
+                h += '<button class="check-btn" id="check-btn-' + i + '" onclick="checkOpen(' + i + ')">Проверить</button></div>';
+            } else if (item.type === 'multi') {
+                h += '<p class="multi-hint">🔘 Выберите ВСЕ правильные варианты, затем нажмите «Проверить».</p><ul class="quiz-options">';
+                for (var j = 0; j < item.o.length; j++) {
+                    h += '<li onclick="toggleMulti(' + i + ',' + j + ')" id="opt-' + i + '-' + j + '">' + String.fromCharCode(65 + j) + ') ' + item.o[j] + '</li>';
                 }
-                h += '<div class="result-msg" id="msg-' + i + '"></div><button class="reset-btn" onclick="resetQuestion(' + i + ')">🔄 Попробовать снова</button></div>';
+                h += '</ul><button class="check-btn" id="multi-check-' + i + '" onclick="checkMulti(' + i + ')" style="margin-top:0.5rem;">Проверить</button>';
+            } else if (item.type === 'match') {
+                var leftKeys = Object.keys(item.match);
+                var rightValues = leftKeys.map(function(k) { return item.match[k]; });
+                var shuffledRight = shuffleArray(rightValues);
+                h += '<p class="matching-hint">🔗 Выберите соответствие для каждого термина из левого столбца.</p>';
+                h += '<table class="matching-table"><tr><td><strong>Термин</strong></td><td><strong>Определение</strong></td></tr>';
+                for (var k = 0; k < leftKeys.length; k++) {
+                    h += '<tr><td><code>' + leftKeys[k] + '</code></td><td><select id="match-' + i + '-' + k + '"><option value="">— выберите —</option>';
+                    for (var m = 0; m < shuffledRight.length; m++) {
+                        h += '<option value="' + shuffledRight[m].replace(/"/g, '&quot;') + '">' + shuffledRight[m] + '</option>';
+                    }
+                    h += '</select></td></tr>';
+                }
+                h += '</table><button class="check-btn" id="match-check-' + i + '" onclick="checkMatch(' + i + ')" style="margin-top:0.5rem;">Проверить</button>';
+            } else if (item.type === 'chrono') {
+                if (!chronoOrders[i]) chronoOrders[i] = shuffleArray(item.chrono);
+                h += '<p class="chrono-hint">🖱 Перетащите элементы в правильном порядке.</p><ul class="chrono-list" id="chrono-' + i + '">';
+                for (var k = 0; k < chronoOrders[i].length; k++) {
+                    h += '<li draggable="true" data-index="' + k + '" data-original="' + chronoOrders[i][k].replace(/"/g, '&quot;') + '" id="chrono-item-' + i + '-' + k + '"><span class="chrono-num">' + (k + 1) + '</span>' + chronoOrders[i][k] + '</li>';
+                }
+                h += '</ul><button class="check-btn" id="chrono-check-' + i + '" onclick="checkChrono(' + i + ')" style="margin-top:0.5rem;">Проверить порядок</button>';
             }
-            container.innerHTML = h;
-            enableDragDrop();
-        }
 
-        function enableDragDrop() {
-            document.querySelectorAll('.chrono-list').forEach(function(list) {
-                if (list.classList.contains('disabled')) return;
-                list.querySelectorAll('li').forEach(function(item) {
-                    item.addEventListener('dragstart', handleDragStart);
-                    item.addEventListener('dragover', handleDragOver);
-                    item.addEventListener('drop', handleDrop);
-                    item.addEventListener('dragend', handleDragEnd);
-                });
+            h += '<div class="result-msg" id="msg-' + i + '"></div><button class="reset-btn" onclick="resetQuestion(' + i + ')">🔄 Попробовать снова</button></div>';
+        }
+        container.innerHTML = h;
+        enableDragDrop();
+    }
+
+    function enableDragDrop() {
+        document.querySelectorAll('.chrono-list').forEach(function(list) {
+            if (list.classList.contains('disabled')) return;
+            list.querySelectorAll('li').forEach(function(item) {
+                item.addEventListener('dragstart', handleDragStart);
+                item.addEventListener('dragover', handleDragOver);
+                item.addEventListener('drop', handleDrop);
+                item.addEventListener('dragend', handleDragEnd);
             });
+        });
+    }
+
+    var dragSrcIndex = null;
+
+    function handleDragStart(e) { dragSrcIndex = parseInt(this.getAttribute('data-index')); this.style.opacity = '0.5'; e.dataTransfer.effectAllowed = 'move'; }
+
+    function handleDragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; return false; }
+
+    function handleDrop(e) {
+        e.stopPropagation();
+        if (dragSrcIndex === null) return;
+        var targetIndex = parseInt(this.getAttribute('data-index'));
+        if (dragSrcIndex !== targetIndex) {
+            var list = this.parentNode;
+            var srcItem = list.querySelector('#chrono-item-' + list.id.replace('chrono-', '') + '-' + dragSrcIndex);
+            if (targetIndex > dragSrcIndex) this.parentNode.insertBefore(srcItem, this.nextSibling);
+            else this.parentNode.insertBefore(srcItem, this);
+            var allItems = list.querySelectorAll('li');
+            for (var i = 0; i < allItems.length; i++) { allItems[i].setAttribute('data-index', i); allItems[i].querySelector('.chrono-num').textContent = (i + 1); }
         }
+        this.style.opacity = '1';
+        return false;
+    }
 
-        var dragSrcIndex = null;
+    function handleDragEnd(e) { this.style.opacity = '1'; dragSrcIndex = null; }
 
-        function handleDragStart(e) { dragSrcIndex = parseInt(this.getAttribute('data-index')); this.style.opacity = '0.5'; e.dataTransfer.effectAllowed = 'move'; }
-        function handleDragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; return false; }
-        function handleDrop(e) {
-            e.stopPropagation();
-            if (dragSrcIndex === null) return;
-            var targetIndex = parseInt(this.getAttribute('data-index'));
-            if (dragSrcIndex !== targetIndex) {
-                var list = this.parentNode;
-                var srcItem = list.querySelector('#chrono-item-' + list.id.replace('chrono-', '') + '-' + dragSrcIndex);
-                if (targetIndex > dragSrcIndex) this.parentNode.insertBefore(srcItem, this.nextSibling);
-                else this.parentNode.insertBefore(srcItem, this);
-                var allItems = list.querySelectorAll('li');
-                for (var i = 0; i < allItems.length; i++) { allItems[i].setAttribute('data-index', i); allItems[i].querySelector('.chrono-num').textContent = (i + 1); }
+    function checkChrono(qi) {
+        var item = testData[qi],
+            list = document.getElementById('chrono-' + qi),
+            btn = document.getElementById('chrono-check-' + qi),
+            msg = document.getElementById('msg-' + qi);
+        if (!list || list.classList.contains('disabled')) return;
+        var items = list.querySelectorAll('li'),
+            userOrder = [];
+        for (var i = 0; i < items.length; i++) userOrder.push(items[i].getAttribute('data-original'));
+        var allCorrect = true;
+        for (var i = 0; i < item.chrono.length; i++) { if (userOrder[i] !== item.chrono[i]) { allCorrect = false; break; } }
+        list.classList.add('disabled');
+        btn.disabled = true;
+        if (allCorrect) { for (var i = 0; i < items.length; i++) items[i].classList.add('correct-order'); msg.textContent = '✅ Правильно!'; msg.className = 'result-msg green'; } else { for (var i = 0; i < items.length; i++) { if (userOrder[i] !== item.chrono[i]) items[i].classList.add('wrong-order');
+                else items[i].classList.add('correct-order'); } msg.textContent = '❌ Неправильно. Порядок: ' + item.chrono.join(' → '); msg.className = 'result-msg red'; }
+    }
+
+    function checkClosed(qi, oi) {
+        var item = testData[qi],
+            all = document.querySelectorAll('#q' + qi + ' .quiz-options li'),
+            msg = document.getElementById('msg-' + qi);
+        for (var k = 0; k < all.length; k++) { if (all[k].classList.contains('correct') || all[k].classList.contains('incorrect')) return; }
+        for (var k = 0; k < all.length; k++) all[k].classList.add('answered');
+        if (oi === item.c) { all[oi].classList.add('correct'); msg.textContent = '✅ Правильно!'; msg.className = 'result-msg green'; } else { all[oi].classList.add('incorrect');
+            all[item.c].classList.add('correct'); msg.textContent = '❌ Неправильно.'; msg.className = 'result-msg red'; }
+    }
+
+    function checkOpen(qi) {
+        var input = document.getElementById('open-' + qi),
+            btn = document.getElementById('check-btn-' + qi),
+            msg = document.getElementById('msg-' + qi),
+            item = testData[qi];
+        if (!input || input.classList.contains('correct-input') || input.classList.contains('incorrect-input')) return;
+        var ua = input.value.trim(),
+            ca = item.openA.trim(),
+            isCorrect = ua.toLowerCase() === ca.toLowerCase();
+        if (!isCorrect && ca === "Visual Studio") isCorrect = (ua.toLowerCase() === "visual studio" || ua.toLowerCase() === "vs");
+        if (isCorrect) { input.classList.add('correct-input');
+            btn.disabled = true; msg.textContent = '✅ Правильно!'; msg.className = 'result-msg green'; } else { input.classList.add('incorrect-input');
+            btn.disabled = true; msg.textContent = '❌ Ответ: ' + item.openA; msg.className = 'result-msg red'; }
+    }
+
+    function checkMulti(qi) {
+        var item = testData[qi],
+            all = document.querySelectorAll('#q' + qi + ' .quiz-options li'),
+            btn = document.getElementById('multi-check-' + qi),
+            msg = document.getElementById('msg-' + qi);
+        for (var k = 0; k < all.length; k++) { if (all[k].classList.contains('correct') || all[k].classList.contains('incorrect')) return; }
+        var sel = [];
+        for (var k = 0; k < all.length; k++) { if (all[k].classList.contains('selected-multi')) sel.push(k); }
+        if (sel.length === 0) { msg.textContent = '⚠️ Выберите хотя бы один вариант.'; return; }
+        for (var k = 0; k < all.length; k++) all[k].classList.add('answered');
+        if (btn) btn.disabled = true;
+        if (sel.slice().sort().join(',') === item.multi.slice().sort().join(',')) { for (var k = 0; k < sel.length; k++) all[sel[k]].classList.add('correct'); msg.textContent = '✅ Правильно!'; msg.className = 'result-msg green'; } else { for (var k = 0; k < sel.length; k++) { if (item.multi.indexOf(sel[k]) === -1) all[sel[k]].classList.add('incorrect');
+                else all[sel[k]].classList.add('correct'); } for (var k = 0; k < item.multi.length; k++) { if (sel.indexOf(item.multi[k]) === -1) all[item.multi[k]].classList.add('correct'); } msg.textContent = '❌ Неправильно.'; msg.className = 'result-msg red'; }
+    }
+
+    function toggleMulti(qi, oi) {
+        var all = document.querySelectorAll('#q' + qi + ' .quiz-options li');
+        if (all.length > 0 && all[0].classList.contains('answered')) return;
+        var el = document.getElementById('opt-' + qi + '-' + oi);
+        if (el) el.classList.toggle('selected-multi');
+    }
+
+    function checkMatch(qi) {
+        var item = testData[qi];
+        var leftKeys = Object.keys(item.match);
+        var allCorrect = true;
+        for (var k = 0; k < leftKeys.length; k++) {
+            var sel = document.getElementById('match-' + qi + '-' + k);
+            if (!sel) continue;
+            sel.disabled = true;
+            if (sel.value === item.match[leftKeys[k]]) {
+                sel.classList.add('correct-match');
+            } else {
+                sel.classList.add('incorrect-match');
+                allCorrect = false;
             }
-            this.style.opacity = '1';
-            return false;
         }
-        function handleDragEnd(e) { this.style.opacity = '1'; dragSrcIndex = null; }
+        var btn = document.getElementById('match-check-' + qi);
+        if (btn) btn.disabled = true;
+        var msg = document.getElementById('msg-' + qi);
+        if (allCorrect) { msg.textContent = '✅ Правильно! Все соответствия верны.'; msg.className = 'result-msg green'; } else { msg.textContent = '❌ Есть ошибки. Правильные ответы выделены зелёным.'; msg.className = 'result-msg red'; }
+    }
 
-        function checkChrono(qi) {
-            var item = testData[qi], list = document.getElementById('chrono-' + qi), btn = document.getElementById('chrono-check-' + qi), msg = document.getElementById('msg-' + qi);
-            if (!list || list.classList.contains('disabled')) return;
-            var items = list.querySelectorAll('li'), userOrder = [];
-            for (var i = 0; i < items.length; i++) userOrder.push(items[i].getAttribute('data-original'));
-            var allCorrect = true;
-            for (var i = 0; i < item.chrono.length; i++) { if (userOrder[i] !== item.chrono[i]) { allCorrect = false; break; } }
-            list.classList.add('disabled'); btn.disabled = true;
-            if (allCorrect) { for (var i = 0; i < items.length; i++) items[i].classList.add('correct-order'); msg.textContent = '✅ Правильно!'; msg.className = 'result-msg green'; }
-            else { for (var i = 0; i < items.length; i++) { if (userOrder[i] !== item.chrono[i]) items[i].classList.add('wrong-order'); else items[i].classList.add('correct-order'); } msg.textContent = '❌ Неправильно. Порядок: ' + item.chrono.join(' → '); msg.className = 'result-msg red'; }
-        }
+    function resetQuestion(qi) {
+        var item = testData[qi];
+        if (item.type === 'closed') { var all = document.querySelectorAll('#q' + qi + ' .quiz-options li'); for (var k = 0; k < all.length; k++) all[k].classList.remove('answered', 'correct', 'incorrect'); } else if (item.type === 'open') { var inp = document.getElementById('open-' + qi),
+                btn = document.getElementById('check-btn-' + qi); if (inp) { inp.value = '';
+                inp.classList.remove('correct-input', 'incorrect-input'); } if (btn) btn.disabled = false; } else if (item.type === 'multi') { var all = document.querySelectorAll('#q' + qi + ' .quiz-options li'); for (var k = 0; k < all.length; k++) all[k].classList.remove('answered', 'correct', 'incorrect', 'selected-multi');
+            var btn = document.getElementById('multi-check-' + qi); if (btn) btn.disabled = false; } else if (item.type === 'match') {
+            var leftKeys = Object.keys(item.match);
+            for (var k = 0; k < leftKeys.length; k++) {
+                var sel = document.getElementById('match-' + qi + '-' + k);
+                if (sel) { sel.value = '';
+                    sel.disabled = false;
+                    sel.classList.remove('correct-match', 'incorrect-match'); }
+            }
+            var btn = document.getElementById('match-check-' + qi);
+            if (btn) btn.disabled = false;
+        } else if (item.type === 'chrono') { chronoOrders[qi] = shuffleArray(testData[qi].chrono);
+            renderTestPage(); return; }
+        var msg = document.getElementById('msg-' + qi); if (msg) { msg.textContent = ''; msg.className = 'result-msg'; }
+    }
 
-        function checkClosed(qi, oi) {
-            var item = testData[qi], all = document.querySelectorAll('#q' + qi + ' .quiz-options li'), msg = document.getElementById('msg-' + qi);
-            for (var k = 0; k < all.length; k++) { if (all[k].classList.contains('correct') || all[k].classList.contains('incorrect')) return; }
-            for (var k = 0; k < all.length; k++) all[k].classList.add('answered');
-            if (oi === item.c) { all[oi].classList.add('correct'); msg.textContent = '✅ Правильно!'; msg.className = 'result-msg green'; }
-            else { all[oi].classList.add('incorrect'); all[item.c].classList.add('correct'); msg.textContent = '❌ Неправильно.'; msg.className = 'result-msg red'; }
-        }
-
-        function checkOpen(qi) {
-            var input = document.getElementById('open-' + qi), btn = document.getElementById('check-btn-' + qi), msg = document.getElementById('msg-' + qi), item = testData[qi];
-            if (!input || input.classList.contains('correct-input') || input.classList.contains('incorrect-input')) return;
-            var ua = input.value.trim(), ca = item.openA.trim(), isCorrect = ua.toLowerCase() === ca.toLowerCase();
-            if (!isCorrect && ca === "Visual Studio") isCorrect = (ua.toLowerCase() === "visual studio" || ua.toLowerCase() === "vs");
-            if (isCorrect) { input.classList.add('correct-input'); btn.disabled = true; msg.textContent = '✅ Правильно!'; msg.className = 'result-msg green'; }
-            else { input.classList.add('incorrect-input'); btn.disabled = true; msg.textContent = '❌ Ответ: ' + item.openA; msg.className = 'result-msg red'; }
-        }
-
-        function checkMulti(qi) {
-            var item = testData[qi], all = document.querySelectorAll('#q' + qi + ' .quiz-options li'), btn = document.getElementById('multi-check-' + qi), msg = document.getElementById('msg-' + qi);
-            for (var k = 0; k < all.length; k++) { if (all[k].classList.contains('correct') || all[k].classList.contains('incorrect')) return; }
-            var sel = [];
-            for (var k = 0; k < all.length; k++) { if (all[k].classList.contains('selected-multi')) sel.push(k); }
-            if (sel.length === 0) { msg.textContent = '⚠️ Выберите хотя бы один вариант.'; return; }
-            for (var k = 0; k < all.length; k++) all[k].classList.add('answered');
-            if (btn) btn.disabled = true;
-            if (sel.slice().sort().join(',') === item.multi.slice().sort().join(',')) { for (var k = 0; k < sel.length; k++) all[sel[k]].classList.add('correct'); msg.textContent = '✅ Правильно!'; msg.className = 'result-msg green'; }
-            else { for (var k = 0; k < sel.length; k++) { if (item.multi.indexOf(sel[k]) === -1) all[sel[k]].classList.add('incorrect'); else all[sel[k]].classList.add('correct'); } for (var k = 0; k < item.multi.length; k++) { if (sel.indexOf(item.multi[k]) === -1) all[item.multi[k]].classList.add('correct'); } msg.textContent = '❌ Неправильно.'; msg.className = 'result-msg red'; }
-        }
-
-        function toggleMulti(qi, oi) {
-            var all = document.querySelectorAll('#q' + qi + ' .quiz-options li');
-            if (all.length > 0 && all[0].classList.contains('answered')) return;
-            var el = document.getElementById('opt-' + qi + '-' + oi);
-            if (el) el.classList.toggle('selected-multi');
-        }
-
-        function resetQuestion(qi) {
-            var item = testData[qi];
-            if (item.type === 'closed') { var all = document.querySelectorAll('#q' + qi + ' .quiz-options li'); for (var k = 0; k < all.length; k++) all[k].classList.remove('answered', 'correct', 'incorrect'); }
-            else if (item.type === 'open') { var inp = document.getElementById('open-' + qi), btn = document.getElementById('check-btn-' + qi); if (inp) { inp.value = ''; inp.classList.remove('correct-input', 'incorrect-input'); } if (btn) btn.disabled = false; }
-            else if (item.type === 'multi') { var all = document.querySelectorAll('#q' + qi + ' .quiz-options li'); for (var k = 0; k < all.length; k++) all[k].classList.remove('answered', 'correct', 'incorrect', 'selected-multi'); var btn = document.getElementById('multi-check-' + qi); if (btn) btn.disabled = false; }
-            else if (item.type === 'chrono') { chronoOrders[qi] = shuffleArray(testData[qi].chrono); renderTestPage(); return; }
-            var msg = document.getElementById('msg-' + qi); if (msg) { msg.textContent = ''; msg.className = 'result-msg'; }
-        }
-
-        window.addEventListener('load', function() { if (document.getElementById('page-tests') && document.getElementById('page-tests').classList.contains('active')) { renderTestNav(); renderTestPage(); } });
-    </script>
+    window.addEventListener('load', function() {
+        if (document.getElementById('page-tests') && document.getElementById('page-tests').classList.contains('active')) { renderTestNav();
+            renderTestPage(); }
+    });
+</script>
